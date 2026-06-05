@@ -8,3 +8,4 @@ github-copilot-sdk>=1.0.0
 # For structured LangChain translation (Optional but recommended)
 langchain-openai>=0.1.0
 pytest
+textual>=0.62.0

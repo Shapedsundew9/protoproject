@@ -108,3 +108,68 @@ class Neo4jStore:
                         child_id=requirement.id,
                         dependency_id=dependency_id,
                     )
+
+    def persist_requirement_revision(self, revision: RequirementRecord) -> None:
+        """Persist a refinement revision and mark the prior version chain."""
+
+        with self._driver.session() as session:
+            session.run(
+                """
+                MERGE (r:Requirement {id: $id})
+                SET r.text = $text,
+                    r.embedding = $embedding,
+                    r.layer = $layer,
+                    r.concern_value = $concern_value,
+                    r.state = $state,
+                    r.version = $version,
+                    r.timestamp = $timestamp,
+                    r.supersedes_id = $supersedes_id
+                WITH r
+                MATCH (s:Source {id: $source_id})
+                MERGE (r)-[:ORIGINATED_FROM]->(s)
+                """,
+                id=revision.id,
+                text=revision.text,
+                embedding=revision.embedding,
+                layer=revision.layer,
+                concern_value=revision.concern_value,
+                state=revision.state,
+                version=revision.version,
+                timestamp=revision.timestamp,
+                supersedes_id=revision.supersedes_id,
+                source_id=revision.source_id,
+            )
+
+            if revision.supersedes_id:
+                session.run(
+                    """
+                    MATCH (current:Requirement {id: $current_id})
+                    MATCH (previous:Requirement {id: $previous_id})
+                    MERGE (current)-[:SUPERSEDES]->(previous)
+                    SET previous.state = 'Superseded'
+                    """,
+                    current_id=revision.id,
+                    previous_id=revision.supersedes_id,
+                )
+
+            if revision.parent_id:
+                session.run(
+                    """
+                    MATCH (child:Requirement {id: $child_id})
+                    MATCH (parent:Requirement {id: $parent_id})
+                    MERGE (child)-[:CHILD_OF]->(parent)
+                    """,
+                    child_id=revision.id,
+                    parent_id=revision.parent_id,
+                )
+
+            for dependency_id in revision.depends_on_ids:
+                session.run(
+                    """
+                    MATCH (child:Requirement {id: $child_id})
+                    MATCH (dependency:Requirement {id: $dependency_id})
+                    MERGE (child)-[:DEPENDS_ON]->(dependency)
+                    """,
+                    child_id=revision.id,
+                    dependency_id=dependency_id,
+                )
