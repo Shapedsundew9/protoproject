@@ -43,7 +43,7 @@ async def run_pipeline():
 
         # Configure your session parameters
         session = await client.create_session(
-            model="raptor-mini",  # Use a lightweight model for testing
+            model="auto",  # Use a lightweight model for testing
             on_permission_request=PermissionHandler.approve_all,
             streaming=False,
         )
@@ -57,7 +57,8 @@ async def run_pipeline():
         response = await session.send_and_wait(prompt=test_prompt)
 
         print("\n🤖 [Copilot Response]:")
-        print(f"👉 {response.data.content}\n")
+        assert response is not None, "No response received from Copilot SDK!"
+        print(f"👉 {response.data.content}\n")  # type: ignore
         print("✅ Copilot SDK Execution Loop Successful!")
 
 
