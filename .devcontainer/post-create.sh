@@ -19,3 +19,7 @@ fi
 # Install Python dependencies from requirements.txt
 echo "Installing requirements..."
 find . -name "requirements.txt" -exec ./.venv/bin/pip install -r {} \;
+
+echo "Installing project in editable mode..."
+./.venv/bin/pip install -e .
+

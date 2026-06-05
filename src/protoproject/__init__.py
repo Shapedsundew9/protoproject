@@ -1,0 +1,1 @@
+"""ProtoProject core package."""
