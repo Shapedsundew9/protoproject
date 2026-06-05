@@ -1,0 +1,9 @@
+langchain>=0.1.0
+langchain-community>=0.0.20
+langchain-core>=0.1.20
+langgraph>=0.0.20
+neo4j>=5.18.0
+# --- New Copilot SDK Additions ---
+github-copilot-sdk>=1.0.0
+# For structured LangChain translation (Optional but recommended)
+langchain-openai>=0.1.0 
