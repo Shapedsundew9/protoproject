@@ -64,6 +64,7 @@
 	"postStartCommand": "bash .devcontainer/post-start.sh",
 	"containerEnv": {
 		"GITHUB_TOKEN": "${localEnv:COPILOT_GITHUB_TOKEN}",
-		"GEMINI_API_KEY": "${localEnv:GEMINI_API_KEY}"
+		// "GEMINI_API_KEY": "${localEnv:GEMINI_API_KEY}",
+		"GEMINI_API_KEY": "${localEnv:FREE_GEMINI_API_KEY}"
 	}
 }

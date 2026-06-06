@@ -10,9 +10,15 @@ Guidance for AI coding agents working in this repository.
 
 ## Common Commands
 
+- Before executing any python commands
+  - `source .venv/bin/activate`
 - Verify core integrations (Neo4j + Copilot SDK runtime):
-  - `.venv/bin/python src/test_env.py`
-  - `.venv/bin/python pytest
+  - `python src/test_env.py`
+- Use `pytest` for validations
+
+## Graphify
+
+**ALWAYS** Before answering architecture or codebase questions, read `graphify-out/GRAPH_REPORT.md` for god nodes and community structure
 
 ## Scope Note
 

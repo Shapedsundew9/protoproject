@@ -61,6 +61,19 @@ async def run_pipeline():
         print(f"👉 {response.data.content}\n")  # type: ignore
         print("✅ Copilot SDK Execution Loop Successful!")
 
+    # =========================================================================
+    # Test Google GenAI Connectivity
+    # =========================================================================
+    print("🤖 Testing Google GenAI Connectivity...")
+    from google import genai
+
+    client = genai.Client()
+    test_response = client.models.generate_content(
+        model="gemini-2.5-flash", contents="Hi, reply with only the word SUCCESS."
+    ).text
+    assert test_response is not None, "No response received from Google GenAI!"
+    print(f"✅ Google GenAI Connectivity Successful! Response: {test_response.strip()}")
+
 
 if __name__ == "__main__":
     # Run the async pipeline inside Python 3.14's event loop
