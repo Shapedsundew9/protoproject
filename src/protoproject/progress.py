@@ -1,4 +1,4 @@
-"""Progress and telemetry models for ingest runs."""
+"""Progress and telemetry models for ingest and refinement runs."""
 
 from __future__ import annotations
 
@@ -51,6 +51,23 @@ class IngestProgressEvent:
 ProgressReporter = Callable[[IngestProgressEvent], None]
 
 
+@dataclass(slots=True)
+class RefineProgressEvent:
+    """Structured progress update emitted during a refinement run."""
+
+    stage: str  # "mark_under_review" | "evaluate" | "generate_proposal"
+    #             | "apply_auto" | "human_review" | "commit"
+    status: ProgressStatus
+    requirement_id: str
+    message: str
+    action: str | None = None  # "stabilized" | "auto_refined" | "human_accepted" | "skipped"
+    usage: LLMUsageSummary | None = None
+
+
+AnyProgressEvent = IngestProgressEvent | RefineProgressEvent
+AnyProgressReporter = Callable[[AnyProgressEvent], None]
+
+
 def emit_progress(
     reporter: ProgressReporter | None,
     *,
@@ -62,7 +79,7 @@ def emit_progress(
     elapsed_seconds: float | None = None,
     usage: LLMUsageSummary | None = None,
 ) -> None:
-    """Send a progress event if a reporter is configured."""
+    """Send an IngestProgressEvent if a reporter is configured."""
 
     if reporter is None:
         return
@@ -74,6 +91,32 @@ def emit_progress(
             current=current,
             total=total,
             elapsed_seconds=elapsed_seconds,
+            usage=usage,
+        )
+    )
+
+
+def emit_refine_progress(
+    reporter: AnyProgressReporter | None,
+    *,
+    stage: str,
+    status: ProgressStatus,
+    requirement_id: str,
+    message: str,
+    action: str | None = None,
+    usage: LLMUsageSummary | None = None,
+) -> None:
+    """Send a RefineProgressEvent if a reporter is configured."""
+
+    if reporter is None:
+        return
+    reporter(
+        RefineProgressEvent(
+            stage=stage,
+            status=status,
+            requirement_id=requirement_id,
+            message=message,
+            action=action,
             usage=usage,
         )
     )

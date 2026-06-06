@@ -1,4 +1,4 @@
-"""Data models used by the Phase 1 pipeline."""
+"""Data models for the ProtoProject pipeline (Phase 1 and 2)."""
 
 from __future__ import annotations
 
@@ -96,3 +96,24 @@ class ReviewResult:
     requirement: RequirementRecord
     quality_issues: list[QualityIssue]
     proposal: RefinementProposal | None = None
+
+
+@dataclass(slots=True)
+class HumanDecision:
+    """The user's choice at a human-review interrupt."""
+
+    action: str  # "accept" | "edit" | "skip"
+    text: str  # accepted or edited requirement text
+    concern_value: int
+
+
+@dataclass(slots=True)
+class WorkflowOutcome:
+    """Result returned after processing one requirement through the workflow."""
+
+    requirement_id: str
+    # "stabilized" | "auto_refined" | "needs_human" | "skipped" | "error"
+    status: str
+    revised: RequirementRecord | None = None
+    pending_review: ReviewResult | None = None
+    error: str | None = None

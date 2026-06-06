@@ -1,4 +1,4 @@
-"""Neo4j persistence for Phase 1."""
+"""Neo4j persistence for ProtoProject (Phase 1 and 2)."""
 
 from __future__ import annotations
 
@@ -261,3 +261,68 @@ class Neo4jStore:
             # Vector index may not be available (e.g., Community edition without
             # the vector plugin, or schema not yet initialised).
             return []
+
+    # ------------------------------------------------------------------
+    # Phase 2 — refinement workflow helpers
+    # ------------------------------------------------------------------
+
+    def load_refinement_queue(self, limit: int = 100) -> list[RequirementRecord]:
+        """Return requirements queued for refinement, Under_Review first then Draft.
+
+        Under_Review nodes are prioritised so an interrupted session resumes
+        from where it left off.  Draft nodes are ordered by timestamp (oldest
+        first) so requirements are refined in ingestion order.
+        """
+        with self._driver.session() as session:
+            result = session.run(
+                """
+                MATCH (r:Requirement)
+                WHERE r.state IN ['Under_Review', 'Draft']
+                OPTIONAL MATCH (r)-[:ORIGINATED_FROM]->(s:Source)
+                RETURN r, s.id AS source_id
+                ORDER BY
+                    CASE r.state WHEN 'Under_Review' THEN 0 ELSE 1 END,
+                    r.timestamp
+                LIMIT $limit
+                """,
+                limit=limit,
+            )
+            records = []
+            for row in result:
+                node = row["r"]
+                sid = row["source_id"] or node.get("source_id", "")
+                records.append(
+                    RequirementRecord(
+                        id=node["id"],
+                        text=node["text"],
+                        embedding=list(node.get("embedding") or []),
+                        layer=node.get("layer", "Product"),
+                        concern_value=int(node.get("concern_value", 3)),
+                        state=node["state"],
+                        version=int(node.get("version", 1)),
+                        timestamp=int(node.get("timestamp", 0)),
+                        source_id=sid,
+                        parent_id=node.get("parent_id"),
+                        supersedes_id=node.get("supersedes_id"),
+                        depends_on_ids=[],
+                    )
+                )
+            return records
+
+    def mark_requirement_state(self, req_id: str, state: str) -> None:
+        """Set the state of a requirement node (crash-safe checkpoint write)."""
+        with self._driver.session() as session:
+            session.run(
+                "MATCH (r:Requirement {id: $id}) SET r.state = $state",
+                id=req_id,
+                state=state,
+            )
+
+    def count_by_state(self) -> dict[str, int]:
+        """Return a mapping of state → count across all Requirement nodes."""
+        with self._driver.session() as session:
+            result = session.run(
+                "MATCH (r:Requirement) RETURN r.state AS state, count(*) AS n"
+            )
+            return {row["state"]: row["n"] for row in result}
+

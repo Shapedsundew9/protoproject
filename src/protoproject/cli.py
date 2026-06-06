@@ -1,8 +1,7 @@
-"""Command-line entrypoint for Phase 1."""
+"""Command-line entrypoint for ProtoProject (Phase 1 and 2)."""
 
 from __future__ import annotations
 
-import asyncio
 import os
 import sys
 from pathlib import Path
@@ -10,23 +9,36 @@ from pathlib import Path
 from copilot import CopilotClient
 from copilot.client import StopError
 
+from .config import load_config
 from .ingest import ingest_file
+from .models import HumanDecision
 from .parser import _mechanical_parse_fallback
-from .progress import IngestProgressEvent, LLMUsageSummary, format_usage_summary
+from .progress import (
+    AnyProgressEvent,
+    IngestProgressEvent,
+    LLMUsageSummary,
+    RefineProgressEvent,
+    format_usage_summary,
+)
 from .refinement import build_review
-from .tui import IngestReviewApp
+from .store import Neo4jStore
+from .tui import IngestReviewApp, ProtoProjectApp
 from .validator import ValidationContext, build_source_record, normalize_requirements
 
 
 class CliProgressReporter:
     def __init__(self, stream) -> None:
         self._stream = stream
-        self.last_event: IngestProgressEvent | None = None
+        self.last_event: AnyProgressEvent | None = None
         self._active_inline_stage: str | None = None
         self._last_line_length = 0
 
-    def __call__(self, event: IngestProgressEvent) -> None:
+    def __call__(self, event: AnyProgressEvent) -> None:
         self.last_event = event
+        if isinstance(event, RefineProgressEvent):
+            self._handle_refine_event(event)
+            return
+        # IngestProgressEvent path (original behaviour).
         if self._should_render_inline(event):
             self._write_inline(self._format_inline_event(event))
             if event.status in {"completed", "fallback", "error", "cancelled"}:
@@ -126,6 +138,19 @@ class CliProgressReporter:
             return frames[0]
         return frames[int(event.elapsed_seconds) % len(frames)]
 
+    def _handle_refine_event(self, event: RefineProgressEvent) -> None:
+        if self._active_inline_stage is not None:
+            self._finish_inline()
+        action_tag = f" → {event.action}" if event.action else ""
+        usage_tag = ""
+        if event.usage is not None:
+            usage_tag = f" | {format_usage_summary(event.usage)}"
+        line = (
+            f"[refine:{event.stage}] {event.requirement_id} | "
+            f"{event.message}{action_tag}{usage_tag}"
+        )
+        print(line, file=self._stream, flush=True)
+
 
 def _usage_summary_line(usage: LLMUsageSummary | None) -> str:
     if usage is None:
@@ -178,6 +203,29 @@ def _build_arg_parser():
         "review", help="Review a requirement from a raw text file"
     )
     review_p.add_argument("path", type=Path)
+
+    refine_p = subparsers.add_parser(
+        "refine",
+        help="Run the Phase 2 refinement workflow over Draft requirements in Neo4j",
+    )
+    refine_p.add_argument(
+        "--limit",
+        type=int,
+        default=100,
+        metavar="N",
+        help="Maximum number of requirements to process in this session (default 100)",
+    )
+    refine_p.add_argument(
+        "--req-id",
+        metavar="ID",
+        default=None,
+        help="Refine a single requirement by ID (ignores --limit)",
+    )
+    refine_p.add_argument(
+        "--no-tui",
+        action="store_true",
+        help="Use plain-text prompts instead of the interactive TUI for human review",
+    )
     return parser
 
 
@@ -220,7 +268,7 @@ def _run_ingest(
 
     use_tui = not plain and sys.stdout.isatty()
     if use_tui:
-        IngestReviewApp(result).run()
+        IngestReviewApp(ingest_result=result).run()
     else:
         print(f"Source:               {result.source.id}")
         print(f"Requirements created: {len(result.requirements)}")
@@ -230,6 +278,191 @@ def _run_ingest(
             suffix = f" ({issue.requirement_id})" if issue.requirement_id else ""
             print(f"  [{issue.code}]{suffix}: {issue.message}")
     return 0
+
+
+def _run_refine(
+    limit: int,
+    req_id: str | None,
+    plain: bool,
+) -> int:
+    """Run the Phase 2 batch refinement workflow.
+
+    Each requirement is processed end-to-end:
+    - Auto-refined when concern is low and no high-severity issues.
+    - Paused for human review (TUI or plain-text) otherwise.
+    Every decision is persisted to Neo4j immediately so the session is
+    resumable after an interruption.
+    """
+    from .workflow import RefinementWorkflow  # noqa: PLC0415
+
+    cfg = load_config()
+    reporter = CliProgressReporter(sys.stderr)
+    token = os.getenv("COPILOT_GITHUB_TOKEN") or os.getenv("GITHUB_TOKEN")
+    copilot_client = None
+    if token:
+        try:
+            copilot_client = CopilotClient(github_token=token)
+        except (ImportError, ValueError) as exc:
+            print(
+                f"[warn] Copilot client unavailable ({exc}); using rule-based proposals only.",
+                file=sys.stderr,
+            )
+
+    store = Neo4jStore(
+        uri=cfg.neo4j_uri,
+        username=cfg.neo4j_username,
+        password=cfg.neo4j_password,
+        embedding_dimension=cfg.embedding_dimension,
+        progress=reporter,
+    )
+
+    try:
+        if req_id:
+            queue = [
+                r for r in store.load_refinement_queue(limit=10000)
+                if r.id == req_id
+            ]
+            if not queue:
+                print(f"[error] Requirement '{req_id}' not found or not in Draft/Under_Review state.",
+                      file=sys.stderr)
+                return 1
+        else:
+            queue = store.load_refinement_queue(limit=limit)
+
+        under_review = sum(1 for r in queue if r.state == "Under_Review")
+        draft = sum(1 for r in queue if r.state == "Draft")
+        print(
+            f"Refinement queue: {draft} Draft, {under_review} Under_Review "
+            f"({len(queue)} total to process)",
+            file=sys.stderr,
+        )
+
+        workflow = RefinementWorkflow(
+            store,
+            copilot_client=copilot_client,
+            progress=reporter,
+        )
+
+        counts: dict[str, int] = {
+            "stabilized": 0,
+            "auto_refined": 0,
+            "human_accepted": 0,
+            "skipped": 0,
+            "error": 0,
+        }
+
+        use_tui = not plain and sys.stdout.isatty()
+
+        for requirement in queue:
+            outcome = workflow.run_one(requirement)
+
+            if outcome.status == "needs_human":
+                review_result = outcome.pending_review
+                decision: HumanDecision | None = None
+
+                if use_tui:
+                    decision = ProtoProjectApp(review_result=review_result).run()
+                else:
+                    decision = _plain_text_human_review(requirement, review_result)
+
+                if decision is None or decision.action == "skip":
+                    # Treat a closed TUI window (decision=None) as a skip.
+                    if decision is None:
+                        decision = HumanDecision(
+                            action="skip",
+                            text=requirement.text,
+                            concern_value=requirement.concern_value,
+                        )
+                    outcome = workflow.resume(requirement, decision)
+
+                else:
+                    outcome = workflow.resume(requirement, decision)
+
+            if outcome.status in ("stabilized", "auto_refined"):
+                if outcome.status == "stabilized" and not (outcome.revised and outcome.revised.version > 1):
+                    counts["stabilized"] += 1
+                elif outcome.status == "auto_refined":
+                    # Distinguish human-accepted from automatic.
+                    if outcome.revised and hasattr(outcome, "_human"):
+                        counts["human_accepted"] += 1
+                    else:
+                        counts["auto_refined"] += 1
+                else:
+                    counts["stabilized"] += 1
+            elif outcome.status == "skipped":
+                counts["skipped"] += 1
+            elif outcome.status == "error":
+                counts["error"] += 1
+                print(
+                    f"[error] {requirement.id}: {outcome.error}",
+                    file=sys.stderr,
+                )
+
+    except KeyboardInterrupt:
+        reporter.close()
+        print("\n[cancelled] Refinement interrupted.", file=sys.stderr)
+        return 130
+    finally:
+        store.close()
+        reporter.close()
+
+    total = sum(counts.values())
+    print(
+        f"\nRefinement complete: {total} processed — "
+        f"{counts['stabilized']} stabilized, "
+        f"{counts['auto_refined']} auto-refined, "
+        f"{counts['skipped']} skipped, "
+        f"{counts['error']} error(s)"
+    )
+    return 0 if counts["error"] == 0 else 1
+
+
+def _plain_text_human_review(requirement, review_result) -> HumanDecision:
+    """Fallback plain-text human review for non-TTY / --no-tui mode."""
+    req = review_result.requirement
+    issues = review_result.quality_issues
+    proposal = review_result.proposal
+
+    print(f"\n{'='*60}")
+    print(f"Requirement: {req.id}  (v{req.version}, concern={req.concern_value})")
+    print(f"Text: {req.text}")
+    print(f"Issues ({len(issues)}):")
+    for issue in issues:
+        print(f"  [{issue.code}] {issue.severity}: {issue.message}")
+    if proposal:
+        print(f"Proposed: {proposal.proposed_text}")
+        print(f"Suggested concern value: {proposal.concern_value}")
+    print("\nOptions: [a] Accept proposal  [e] Edit  [s] Skip")
+
+    while True:
+        try:
+            choice = input("Choice: ").strip().lower()
+        except EOFError:
+            choice = "s"
+        if choice == "a" and proposal:
+            return HumanDecision(
+                action="accept",
+                text=proposal.proposed_text,
+                concern_value=proposal.concern_value,
+            )
+        if choice == "e":
+            try:
+                new_text = input("Enter revised requirement text: ").strip()
+                if new_text:
+                    cv_str = input(
+                        f"Concern value [{req.concern_value}]: "
+                    ).strip()
+                    cv = int(cv_str) if cv_str.isdigit() else req.concern_value
+                    cv = max(1, min(5, cv))
+                    return HumanDecision(action="accept", text=new_text, concern_value=cv)
+            except EOFError:
+                pass
+        if choice in ("s", ""):
+            return HumanDecision(
+                action="skip",
+                text=req.text,
+                concern_value=req.concern_value,
+            )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -260,6 +493,16 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Proposal: {review.proposal.proposed_text}")
             print(f"Suggested concern: {review.proposal.concern_value}")
         return 0
+
+    if args.command == "refine":
+        try:
+            return _run_refine(
+                limit=args.limit,
+                req_id=args.req_id,
+                plain=args.no_tui,
+            )
+        except KeyboardInterrupt:
+            return 130
 
     parser.error("unknown command")
     return 1
