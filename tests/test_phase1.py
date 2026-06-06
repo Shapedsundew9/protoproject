@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import io
 import sys
 import tempfile
@@ -590,7 +589,6 @@ class _FakeCopilotClient:
     async def create_session(self, **_: object) -> "_FakeCopilotSession":
         self.create_session_calls += 1
         return self._session
-
 
 
 class _FakeCopilotSession:

@@ -32,3 +32,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pylint.basic]
+no-docstring-rgx = "^(_|test_.*|setUp|tearDown|setUpClass|tearDownClass|Test.*|.*Tests)$"
