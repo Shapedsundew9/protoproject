@@ -4,985 +4,1363 @@
   "graph": {},
   "nodes": [
     {
+      "label": "devcontainer.json",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L1",
+      "id": "devcontainer_devcontainer",
+      "community": 8,
+      "norm_label": "devcontainer.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L2",
+      "id": "devcontainer_devcontainer_name",
+      "community": 8,
+      "norm_label": "name"
+    },
+    {
+      "label": "dockerComposeFile",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L3",
+      "id": "devcontainer_devcontainer_dockercomposefile",
+      "community": 8,
+      "norm_label": "dockercomposefile"
+    },
+    {
+      "label": "service",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L4",
+      "id": "devcontainer_devcontainer_service",
+      "community": 8,
+      "norm_label": "service"
+    },
+    {
+      "label": "workspaceFolder",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L5",
+      "id": "devcontainer_devcontainer_workspacefolder",
+      "community": 8,
+      "norm_label": "workspacefolder"
+    },
+    {
+      "label": "customizations",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L6",
+      "id": "devcontainer_devcontainer_customizations",
+      "community": 8,
+      "norm_label": "customizations"
+    },
+    {
+      "label": "vscode",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L7",
+      "id": "devcontainer_devcontainer_customizations_vscode",
+      "community": 8,
+      "norm_label": "vscode"
+    },
+    {
+      "label": "extensions",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L8",
+      "id": "devcontainer_devcontainer_vscode_extensions",
+      "community": 8,
+      "norm_label": "extensions"
+    },
+    {
+      "label": "settings",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L21",
+      "id": "devcontainer_devcontainer_vscode_settings",
+      "community": 6,
+      "norm_label": "settings"
+    },
+    {
+      "label": "python.formatting.provider",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L22",
+      "id": "devcontainer_devcontainer_settings_python_formatting_provider",
+      "community": 6,
+      "norm_label": "python.formatting.provider"
+    },
+    {
+      "label": "python.linting.pylintEnabled",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L23",
+      "id": "devcontainer_devcontainer_settings_python_linting_pylintenabled",
+      "community": 6,
+      "norm_label": "python.linting.pylintenabled"
+    },
+    {
+      "label": "python.linting.enabled",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L24",
+      "id": "devcontainer_devcontainer_settings_python_linting_enabled",
+      "community": 6,
+      "norm_label": "python.linting.enabled"
+    },
+    {
+      "label": "editor.formatOnSave",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L25",
+      "id": "devcontainer_devcontainer_settings_editor_formatonsave",
+      "community": 6,
+      "norm_label": "editor.formatonsave"
+    },
+    {
+      "label": "python.defaultInterpreterPath",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L26",
+      "id": "devcontainer_devcontainer_settings_python_defaultinterpreterpath",
+      "community": 6,
+      "norm_label": "python.defaultinterpreterpath"
+    },
+    {
+      "label": "python.terminal.activateEnvironment",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L27",
+      "id": "devcontainer_devcontainer_settings_python_terminal_activateenvironment",
+      "community": 6,
+      "norm_label": "python.terminal.activateenvironment"
+    },
+    {
+      "label": "python.analysis.autoImportCompletions",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L28",
+      "id": "devcontainer_devcontainer_settings_python_analysis_autoimportcompletions",
+      "community": 6,
+      "norm_label": "python.analysis.autoimportcompletions"
+    },
+    {
+      "label": "python.analysis.indexing",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L29",
+      "id": "devcontainer_devcontainer_settings_python_analysis_indexing",
+      "community": 6,
+      "norm_label": "python.analysis.indexing"
+    },
+    {
+      "label": "python.analysis.autoSearchPaths",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L30",
+      "id": "devcontainer_devcontainer_settings_python_analysis_autosearchpaths",
+      "community": 6,
+      "norm_label": "python.analysis.autosearchpaths"
+    },
+    {
+      "label": "python.analysis.useImportHeuristic",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L31",
+      "id": "devcontainer_devcontainer_settings_python_analysis_useimportheuristic",
+      "community": 6,
+      "norm_label": "python.analysis.useimportheuristic"
+    },
+    {
+      "label": "[python]",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L32",
+      "id": "devcontainer_devcontainer_settings_python",
+      "community": 6,
+      "norm_label": "[python]"
+    },
+    {
+      "label": "editor.defaultFormatter",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L33",
+      "id": "devcontainer_devcontainer_python_editor_defaultformatter",
+      "community": 6,
+      "norm_label": "editor.defaultformatter"
+    },
+    {
+      "label": "editor.formatOnSave",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L34",
+      "id": "devcontainer_devcontainer_python_editor_formatonsave",
+      "community": 6,
+      "norm_label": "editor.formatonsave"
+    },
+    {
+      "label": "editor.codeActionsOnSave",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L35",
+      "id": "devcontainer_devcontainer_python_editor_codeactionsonsave",
+      "community": 6,
+      "norm_label": "editor.codeactionsonsave"
+    },
+    {
+      "label": "source.organizeImports",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L36",
+      "id": "devcontainer_devcontainer_editor_codeactionsonsave_source_organizeimports",
+      "community": 6,
+      "norm_label": "source.organizeimports"
+    },
+    {
+      "label": "[json]",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L39",
+      "id": "devcontainer_devcontainer_settings_json",
+      "community": 6,
+      "norm_label": "[json]"
+    },
+    {
+      "label": "editor.formatOnSave",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L40",
+      "id": "devcontainer_devcontainer_json_editor_formatonsave",
+      "community": 6,
+      "norm_label": "editor.formatonsave"
+    },
+    {
+      "label": "editor.defaultFormatter",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L41",
+      "id": "devcontainer_devcontainer_json_editor_defaultformatter",
+      "community": 6,
+      "norm_label": "editor.defaultformatter"
+    },
+    {
+      "label": "[jsonc]",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L43",
+      "id": "devcontainer_devcontainer_settings_jsonc",
+      "community": 6,
+      "norm_label": "[jsonc]"
+    },
+    {
+      "label": "editor.formatOnSave",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L44",
+      "id": "devcontainer_devcontainer_jsonc_editor_formatonsave",
+      "community": 6,
+      "norm_label": "editor.formatonsave"
+    },
+    {
+      "label": "editor.defaultFormatter",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L45",
+      "id": "devcontainer_devcontainer_jsonc_editor_defaultformatter",
+      "community": 6,
+      "norm_label": "editor.defaultformatter"
+    },
+    {
+      "label": "isort.args",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L47",
+      "id": "devcontainer_devcontainer_settings_isort_args",
+      "community": 6,
+      "norm_label": "isort.args"
+    },
+    {
+      "label": "python.testing.pytestEnabled",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L51",
+      "id": "devcontainer_devcontainer_settings_python_testing_pytestenabled",
+      "community": 6,
+      "norm_label": "python.testing.pytestenabled"
+    },
+    {
+      "label": "python.testing.unittestEnabled",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L52",
+      "id": "devcontainer_devcontainer_settings_python_testing_unittestenabled",
+      "community": 6,
+      "norm_label": "python.testing.unittestenabled"
+    },
+    {
+      "label": "editor.codeActionsOnSave",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L53",
+      "id": "devcontainer_devcontainer_settings_editor_codeactionsonsave",
+      "community": 6,
+      "norm_label": "editor.codeactionsonsave"
+    },
+    {
+      "label": "source.fixAll.sortJSON",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L54",
+      "id": "devcontainer_devcontainer_editor_codeactionsonsave_source_fixall_sortjson",
+      "community": 6,
+      "norm_label": "source.fixall.sortjson"
+    },
+    {
+      "label": "features",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L60",
+      "id": "devcontainer_devcontainer_features",
+      "community": 8,
+      "norm_label": "features"
+    },
+    {
+      "label": "ghcr.io/devcontainers/features/node:1",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L61",
+      "id": "devcontainer_devcontainer_features_ghcr_io_devcontainers_features_node_1",
+      "community": 8,
+      "norm_label": "ghcr.io/devcontainers/features/node:1"
+    },
+    {
+      "label": "postCreateCommand",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L63",
+      "id": "devcontainer_devcontainer_postcreatecommand",
+      "community": 8,
+      "norm_label": "postcreatecommand"
+    },
+    {
+      "label": "postStartCommand",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L64",
+      "id": "devcontainer_devcontainer_poststartcommand",
+      "community": 8,
+      "norm_label": "poststartcommand"
+    },
+    {
+      "label": "containerEnv",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L65",
+      "id": "devcontainer_devcontainer_containerenv",
+      "community": 8,
+      "norm_label": "containerenv"
+    },
+    {
+      "label": "GITHUB_TOKEN",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L66",
+      "id": "devcontainer_devcontainer_containerenv_github_token",
+      "community": 8,
+      "norm_label": "github_token"
+    },
+    {
+      "label": "GEMINI_API_KEY",
+      "file_type": "code",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L67",
+      "id": "devcontainer_devcontainer_containerenv_gemini_api_key",
+      "community": 8,
+      "norm_label": "gemini_api_key"
+    },
+    {
       "label": "cli.py",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L1",
-      "id": "protoproject_cli",
-      "community": 1,
-      "norm_label": "cli.py"
+      "community": 0,
+      "norm_label": "cli.py",
+      "id": "protoproject_cli"
     },
     {
       "label": "CliProgressReporter",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L21",
-      "id": "protoproject_cli_cliprogressreporter",
       "community": 15,
-      "norm_label": "cliprogressreporter"
+      "norm_label": "cliprogressreporter",
+      "id": "protoproject_cli_cliprogressreporter"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L22",
-      "id": "protoproject_cli_cliprogressreporter_init",
       "community": 15,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "protoproject_cli_cliprogressreporter_init"
     },
     {
       "label": ".__call__()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L28",
-      "id": "protoproject_cli_cliprogressreporter_call",
       "community": 15,
-      "norm_label": ".__call__()"
+      "norm_label": ".__call__()",
+      "id": "protoproject_cli_cliprogressreporter_call"
     },
     {
       "label": "IngestProgressEvent",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L28",
-      "id": "ingestprogressevent",
       "community": 15,
-      "norm_label": "ingestprogressevent"
+      "norm_label": "ingestprogressevent",
+      "id": "ingestprogressevent"
     },
     {
       "label": ".interruption_message()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L45",
-      "id": "protoproject_cli_cliprogressreporter_interruption_message",
       "community": 15,
-      "norm_label": ".interruption_message()"
+      "norm_label": ".interruption_message()",
+      "id": "protoproject_cli_cliprogressreporter_interruption_message"
     },
     {
       "label": ".close()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L50",
-      "id": "protoproject_cli_cliprogressreporter_close",
       "community": 15,
-      "norm_label": ".close()"
+      "norm_label": ".close()",
+      "id": "protoproject_cli_cliprogressreporter_close"
     },
     {
       "label": "._format_event()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L54",
-      "id": "protoproject_cli_cliprogressreporter_format_event",
       "community": 15,
-      "norm_label": "._format_event()"
+      "norm_label": "._format_event()",
+      "id": "protoproject_cli_cliprogressreporter_format_event"
     },
     {
       "label": "._format_inline_event()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L65",
-      "id": "protoproject_cli_cliprogressreporter_format_inline_event",
       "community": 15,
-      "norm_label": "._format_inline_event()"
+      "norm_label": "._format_inline_event()",
+      "id": "protoproject_cli_cliprogressreporter_format_inline_event"
     },
     {
       "label": "._should_render_inline()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L80",
-      "id": "protoproject_cli_cliprogressreporter_should_render_inline",
       "community": 15,
-      "norm_label": "._should_render_inline()"
+      "norm_label": "._should_render_inline()",
+      "id": "protoproject_cli_cliprogressreporter_should_render_inline"
     },
     {
       "label": "._write_inline()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L94",
-      "id": "protoproject_cli_cliprogressreporter_write_inline",
       "community": 15,
-      "norm_label": "._write_inline()"
+      "norm_label": "._write_inline()",
+      "id": "protoproject_cli_cliprogressreporter_write_inline"
     },
     {
       "label": "._finish_inline()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L102",
-      "id": "protoproject_cli_cliprogressreporter_finish_inline",
       "community": 15,
-      "norm_label": "._finish_inline()"
+      "norm_label": "._finish_inline()",
+      "id": "protoproject_cli_cliprogressreporter_finish_inline"
     },
     {
       "label": "._is_tty()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L108",
-      "id": "protoproject_cli_cliprogressreporter_is_tty",
       "community": 15,
-      "norm_label": "._is_tty()"
+      "norm_label": "._is_tty()",
+      "id": "protoproject_cli_cliprogressreporter_is_tty"
     },
     {
       "label": "._progress_bar()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L114",
-      "id": "protoproject_cli_cliprogressreporter_progress_bar",
       "community": 15,
-      "norm_label": "._progress_bar()"
+      "norm_label": "._progress_bar()",
+      "id": "protoproject_cli_cliprogressreporter_progress_bar"
     },
     {
       "label": "._spinner_frame()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L119",
-      "id": "protoproject_cli_cliprogressreporter_spinner_frame",
       "community": 15,
-      "norm_label": "._spinner_frame()"
+      "norm_label": "._spinner_frame()",
+      "id": "protoproject_cli_cliprogressreporter_spinner_frame"
     },
     {
       "label": "_usage_summary_line()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L130",
-      "id": "protoproject_cli_usage_summary_line",
-      "community": 1,
-      "norm_label": "_usage_summary_line()"
+      "community": 15,
+      "norm_label": "_usage_summary_line()",
+      "id": "protoproject_cli_usage_summary_line"
     },
     {
       "label": "LLMUsageSummary",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L130",
-      "id": "src_protoproject_cli_py_llmusagesummary",
-      "community": 1,
-      "norm_label": "llmusagesummary"
+      "community": 15,
+      "norm_label": "llmusagesummary",
+      "id": "src_protoproject_cli_py_llmusagesummary"
     },
     {
       "label": "_load_requirement_from_text()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L136",
-      "id": "protoproject_cli_load_requirement_from_text",
-      "community": 1,
-      "norm_label": "_load_requirement_from_text()"
+      "community": 0,
+      "norm_label": "_load_requirement_from_text()",
+      "id": "protoproject_cli_load_requirement_from_text"
     },
     {
       "label": "_build_arg_parser()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L152",
-      "id": "protoproject_cli_build_arg_parser",
-      "community": 1,
-      "norm_label": "_build_arg_parser()"
+      "community": 0,
+      "norm_label": "_build_arg_parser()",
+      "id": "protoproject_cli_build_arg_parser"
     },
     {
       "label": "_run_ingest()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L184",
-      "id": "protoproject_cli_run_ingest",
-      "community": 1,
-      "norm_label": "_run_ingest()"
+      "community": 15,
+      "norm_label": "_run_ingest()",
+      "id": "protoproject_cli_run_ingest"
     },
     {
       "label": "Path",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L184",
-      "id": "src_protoproject_cli_py_path",
-      "community": 1,
-      "norm_label": "path"
+      "community": 15,
+      "norm_label": "path",
+      "id": "src_protoproject_cli_py_path"
     },
     {
       "label": "main()",
       "file_type": "code",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L242",
-      "id": "protoproject_cli_main",
-      "community": 1,
-      "norm_label": "main()"
+      "community": 0,
+      "norm_label": "main()",
+      "id": "protoproject_cli_main"
     },
     {
       "label": "Command-line entrypoint for Phase 1.",
       "file_type": "rationale",
       "source_file": "src/protoproject/cli.py",
       "source_location": "L1",
-      "id": "protoproject_cli_rationale_1",
-      "community": 1,
-      "norm_label": "command-line entrypoint for phase 1."
+      "community": 0,
+      "norm_label": "command-line entrypoint for phase 1.",
+      "id": "protoproject_cli_rationale_1"
     },
     {
       "label": "embeddings.py",
       "file_type": "code",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L1",
-      "id": "protoproject_embeddings",
-      "community": 5,
-      "norm_label": "embeddings.py"
+      "community": 1,
+      "norm_label": "embeddings.py",
+      "id": "protoproject_embeddings"
     },
     {
       "label": "EmbeddingProvider",
       "file_type": "code",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L11",
-      "id": "protoproject_embeddings_embeddingprovider",
       "community": 3,
-      "norm_label": "embeddingprovider"
+      "norm_label": "embeddingprovider",
+      "id": "protoproject_embeddings_embeddingprovider"
     },
     {
       "label": "Protocol",
       "file_type": "code",
       "source_file": "",
       "source_location": "",
-      "id": "protocol",
       "community": 3,
-      "norm_label": "protocol"
+      "norm_label": "protocol",
+      "id": "protocol"
     },
     {
       "label": ".embed_text()",
       "file_type": "code",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L14",
-      "id": "protoproject_embeddings_embeddingprovider_embed_text",
       "community": 5,
-      "norm_label": ".embed_text()"
+      "norm_label": ".embed_text()",
+      "id": "protoproject_embeddings_embeddingprovider_embed_text"
     },
     {
       "label": "SentenceTransformerProvider",
       "file_type": "code",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L17",
-      "id": "protoproject_embeddings_sentencetransformerprovider",
       "community": 5,
-      "norm_label": "sentencetransformerprovider"
+      "norm_label": "sentencetransformerprovider",
+      "id": "protoproject_embeddings_sentencetransformerprovider"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L26",
-      "id": "protoproject_embeddings_sentencetransformerprovider_init",
       "community": 15,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "protoproject_embeddings_sentencetransformerprovider_init"
     },
     {
       "label": "ProgressReporter",
       "file_type": "code",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L26",
-      "id": "src_protoproject_embeddings_py_progressreporter",
       "community": 15,
-      "norm_label": "progressreporter"
+      "norm_label": "progressreporter",
+      "id": "src_protoproject_embeddings_py_progressreporter"
     },
     {
       "label": "._configure_hf_warning_filter()",
       "file_type": "code",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L30",
-      "id": "protoproject_embeddings_sentencetransformerprovider_configure_hf_warning_filter",
       "community": 5,
-      "norm_label": "._configure_hf_warning_filter()"
+      "norm_label": "._configure_hf_warning_filter()",
+      "id": "protoproject_embeddings_sentencetransformerprovider_configure_hf_warning_filter"
     },
     {
       "label": ".embed_text()",
       "file_type": "code",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L48",
-      "id": "protoproject_embeddings_sentencetransformerprovider_embed_text",
       "community": 5,
-      "norm_label": ".embed_text()"
+      "norm_label": ".embed_text()",
+      "id": "protoproject_embeddings_sentencetransformerprovider_embed_text"
     },
     {
       "label": "Embedding providers for Phase 1.",
       "file_type": "rationale",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L1",
-      "id": "protoproject_embeddings_rationale_1",
-      "community": 5,
-      "norm_label": "embedding providers for phase 1."
+      "community": 1,
+      "norm_label": "embedding providers for phase 1.",
+      "id": "protoproject_embeddings_rationale_1"
     },
     {
       "label": "Interface for text embedding backends.",
       "file_type": "rationale",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L12",
-      "id": "protoproject_embeddings_rationale_12",
       "community": 3,
-      "norm_label": "interface for text embedding backends."
+      "norm_label": "interface for text embedding backends.",
+      "id": "protoproject_embeddings_rationale_12"
     },
     {
       "label": "Semantic embedding provider using a local sentence-transformers model.      The",
       "file_type": "rationale",
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L18",
-      "id": "protoproject_embeddings_rationale_18",
       "community": 5,
-      "norm_label": "semantic embedding provider using a local sentence-transformers model.      the"
+      "norm_label": "semantic embedding provider using a local sentence-transformers model.      the",
+      "id": "protoproject_embeddings_rationale_18"
     },
     {
       "label": "parser.py",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L1",
-      "id": "protoproject_parser",
       "community": 4,
-      "norm_label": "parser.py"
+      "norm_label": "parser.py",
+      "id": "protoproject_parser"
     },
     {
       "label": "parse_requirement_text()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L49",
-      "id": "protoproject_parser_parse_requirement_text",
       "community": 4,
-      "norm_label": "parse_requirement_text()"
+      "norm_label": "parse_requirement_text()",
+      "id": "protoproject_parser_parse_requirement_text"
     },
     {
       "label": "ProgressReporter",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L49",
-      "id": "src_protoproject_parser_py_progressreporter",
       "community": 4,
-      "norm_label": "progressreporter"
+      "norm_label": "progressreporter",
+      "id": "src_protoproject_parser_py_progressreporter"
     },
     {
       "label": "LLMUsageSummary",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L49",
-      "id": "src_protoproject_parser_py_llmusagesummary",
       "community": 4,
-      "norm_label": "llmusagesummary"
+      "norm_label": "llmusagesummary",
+      "id": "src_protoproject_parser_py_llmusagesummary"
     },
     {
       "label": "Path",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L49",
-      "id": "src_protoproject_parser_py_path",
       "community": 4,
-      "norm_label": "path"
+      "norm_label": "path",
+      "id": "src_protoproject_parser_py_path"
     },
     {
       "label": "RequirementDraft",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L49",
-      "id": "requirementdraft",
       "community": 4,
-      "norm_label": "requirementdraft"
+      "norm_label": "requirementdraft",
+      "id": "requirementdraft"
     },
     {
       "label": "_llm_parse()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L121",
-      "id": "protoproject_parser_llm_parse",
       "community": 4,
-      "norm_label": "_llm_parse()"
+      "norm_label": "_llm_parse()",
+      "id": "protoproject_parser_llm_parse"
     },
     {
       "label": "_merge_usage_summary()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L226",
-      "id": "protoproject_parser_merge_usage_summary",
       "community": 4,
-      "norm_label": "_merge_usage_summary()"
+      "norm_label": "_merge_usage_summary()",
+      "id": "protoproject_parser_merge_usage_summary"
     },
     {
       "label": "AssistantUsageData",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L226",
-      "id": "assistantusagedata",
       "community": 4,
-      "norm_label": "assistantusagedata"
+      "norm_label": "assistantusagedata",
+      "id": "assistantusagedata"
     },
     {
       "label": "_emit_llm_wait_heartbeats()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L251",
-      "id": "protoproject_parser_emit_llm_wait_heartbeats",
       "community": 4,
-      "norm_label": "_emit_llm_wait_heartbeats()"
+      "norm_label": "_emit_llm_wait_heartbeats()",
+      "id": "protoproject_parser_emit_llm_wait_heartbeats"
     },
     {
       "label": "_add_nullable()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L272",
-      "id": "protoproject_parser_add_nullable",
       "community": 4,
-      "norm_label": "_add_nullable()"
+      "norm_label": "_add_nullable()",
+      "id": "protoproject_parser_add_nullable"
     },
     {
       "label": "_NumericT",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L272",
-      "id": "numerict",
       "community": 4,
-      "norm_label": "_numerict"
+      "norm_label": "_numerict",
+      "id": "numerict"
     },
     {
       "label": "_timestamp_utc()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L282",
-      "id": "protoproject_parser_timestamp_utc",
       "community": 4,
-      "norm_label": "_timestamp_utc()"
+      "norm_label": "_timestamp_utc()",
+      "id": "protoproject_parser_timestamp_utc"
     },
     {
       "label": "_resolve_transcript_path()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L286",
-      "id": "protoproject_parser_resolve_transcript_path",
       "community": 4,
-      "norm_label": "_resolve_transcript_path()"
+      "norm_label": "_resolve_transcript_path()",
+      "id": "protoproject_parser_resolve_transcript_path"
     },
     {
       "label": "_reset_transcript()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L292",
-      "id": "protoproject_parser_reset_transcript",
       "community": 4,
-      "norm_label": "_reset_transcript()"
+      "norm_label": "_reset_transcript()",
+      "id": "protoproject_parser_reset_transcript"
     },
     {
       "label": "_append_transcript_block()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L303",
-      "id": "protoproject_parser_append_transcript_block",
       "community": 4,
-      "norm_label": "_append_transcript_block()"
+      "norm_label": "_append_transcript_block()",
+      "id": "protoproject_parser_append_transcript_block"
     },
     {
       "label": "_extract_text()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L321",
-      "id": "protoproject_parser_extract_text",
       "community": 4,
-      "norm_label": "_extract_text()"
+      "norm_label": "_extract_text()",
+      "id": "protoproject_parser_extract_text"
     },
     {
       "label": "_parse_json_response()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L344",
-      "id": "protoproject_parser_parse_json_response",
       "community": 4,
-      "norm_label": "_parse_json_response()"
+      "norm_label": "_parse_json_response()",
+      "id": "protoproject_parser_parse_json_response"
     },
     {
       "label": "_items_to_drafts()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L354",
-      "id": "protoproject_parser_items_to_drafts",
       "community": 4,
-      "norm_label": "_items_to_drafts()"
+      "norm_label": "_items_to_drafts()",
+      "id": "protoproject_parser_items_to_drafts"
     },
     {
       "label": "_mechanical_parse_fallback()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L383",
-      "id": "protoproject_parser_mechanical_parse_fallback",
       "community": 4,
-      "norm_label": "_mechanical_parse_fallback()"
+      "norm_label": "_mechanical_parse_fallback()",
+      "id": "protoproject_parser_mechanical_parse_fallback"
     },
     {
       "label": "_normalize_line()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L413",
-      "id": "protoproject_parser_normalize_line",
       "community": 4,
-      "norm_label": "_normalize_line()"
+      "norm_label": "_normalize_line()",
+      "id": "protoproject_parser_normalize_line"
     },
     {
       "label": "_is_noise()",
       "file_type": "code",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L424",
-      "id": "protoproject_parser_is_noise",
       "community": 4,
-      "norm_label": "_is_noise()"
+      "norm_label": "_is_noise()",
+      "id": "protoproject_parser_is_noise"
     },
     {
       "label": "Requirement candidate extraction from raw text.  Primary path: async LLM extract",
       "file_type": "rationale",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L1",
-      "id": "protoproject_parser_rationale_1",
       "community": 4,
-      "norm_label": "requirement candidate extraction from raw text.  primary path: async llm extract"
+      "norm_label": "requirement candidate extraction from raw text.  primary path: async llm extract",
+      "id": "protoproject_parser_rationale_1"
     },
     {
       "label": "Return requirement candidates extracted from *raw_text*.      When *copilot_clie",
       "file_type": "rationale",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L58",
-      "id": "protoproject_parser_rationale_58",
       "community": 4,
-      "norm_label": "return requirement candidates extracted from *raw_text*.      when *copilot_clie"
+      "norm_label": "return requirement candidates extracted from *raw_text*.      when *copilot_clie",
+      "id": "protoproject_parser_rationale_58"
     },
     {
       "label": "Pull a plain string out of whatever the SDK returns.",
       "file_type": "rationale",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L322",
-      "id": "protoproject_parser_rationale_322",
       "community": 4,
-      "norm_label": "pull a plain string out of whatever the sdk returns."
+      "norm_label": "pull a plain string out of whatever the sdk returns.",
+      "id": "protoproject_parser_rationale_322"
     },
     {
       "label": "Convert a raw text document into flat requirement candidates.      Treats headin",
       "file_type": "rationale",
       "source_file": "src/protoproject/parser.py",
       "source_location": "L384",
-      "id": "protoproject_parser_rationale_384",
       "community": 4,
-      "norm_label": "convert a raw text document into flat requirement candidates.      treats headin"
+      "norm_label": "convert a raw text document into flat requirement candidates.      treats headin",
+      "id": "protoproject_parser_rationale_384"
     },
     {
       "label": "test_phase1.py",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L1",
-      "id": "tests_test_phase1",
       "community": 5,
-      "norm_label": "test_phase1.py"
+      "norm_label": "test_phase1.py",
+      "id": "tests_test_phase1"
     },
     {
       "label": "_mock_provider()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L37",
-      "id": "tests_test_phase1_mock_provider",
-      "community": 7,
-      "norm_label": "_mock_provider()"
+      "community": 5,
+      "norm_label": "_mock_provider()",
+      "id": "tests_test_phase1_mock_provider"
     },
     {
       "label": "Phase1PipelineTests",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L44",
-      "id": "tests_test_phase1_phase1pipelinetests",
-      "community": 7,
-      "norm_label": "phase1pipelinetests"
+      "community": 5,
+      "norm_label": "phase1pipelinetests",
+      "id": "tests_test_phase1_phase1pipelinetests"
     },
     {
       "label": ".test_parse_normalize_and_audit()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L45",
-      "id": "tests_test_phase1_phase1pipelinetests_test_parse_normalize_and_audit",
-      "community": 7,
-      "norm_label": ".test_parse_normalize_and_audit()"
+      "community": 5,
+      "norm_label": ".test_parse_normalize_and_audit()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_parse_normalize_and_audit"
     },
     {
       "label": ".test_parser_ignores_blank_lines()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L67",
-      "id": "tests_test_phase1_phase1pipelinetests_test_parser_ignores_blank_lines",
-      "community": 4,
-      "norm_label": ".test_parser_ignores_blank_lines()"
+      "community": 5,
+      "norm_label": ".test_parser_ignores_blank_lines()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_parser_ignores_blank_lines"
     },
     {
       "label": ".test_async_parser_uses_fallback_without_client()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L71",
-      "id": "tests_test_phase1_phase1pipelinetests_test_async_parser_uses_fallback_without_client",
-      "community": 7,
-      "norm_label": ".test_async_parser_uses_fallback_without_client()"
+      "community": 4,
+      "norm_label": ".test_async_parser_uses_fallback_without_client()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_async_parser_uses_fallback_without_client"
     },
     {
       "label": ".test_async_parser_emits_llm_usage_and_progress()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L77",
-      "id": "tests_test_phase1_phase1pipelinetests_test_async_parser_emits_llm_usage_and_progress",
       "community": 5,
-      "norm_label": ".test_async_parser_emits_llm_usage_and_progress()"
+      "norm_label": ".test_async_parser_emits_llm_usage_and_progress()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_async_parser_emits_llm_usage_and_progress"
     },
     {
       "label": ".test_async_parser_reports_fallback_when_llm_fails()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L149",
-      "id": "tests_test_phase1_phase1pipelinetests_test_async_parser_reports_fallback_when_llm_fails",
       "community": 5,
-      "norm_label": ".test_async_parser_reports_fallback_when_llm_fails()"
+      "norm_label": ".test_async_parser_reports_fallback_when_llm_fails()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_async_parser_reports_fallback_when_llm_fails"
     },
     {
       "label": ".test_depends_on_cycle_detected()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L168",
-      "id": "tests_test_phase1_phase1pipelinetests_test_depends_on_cycle_detected",
-      "community": 7,
-      "norm_label": ".test_depends_on_cycle_detected()"
+      "community": 2,
+      "norm_label": ".test_depends_on_cycle_detected()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_depends_on_cycle_detected"
     },
     {
       "label": ".test_missing_dependency_flagged()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L199",
-      "id": "tests_test_phase1_phase1pipelinetests_test_missing_dependency_flagged",
-      "community": 7,
-      "norm_label": ".test_missing_dependency_flagged()"
+      "community": 2,
+      "norm_label": ".test_missing_dependency_flagged()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_missing_dependency_flagged"
     },
     {
       "label": ".test_ingest_file_emits_pipeline_progress()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L218",
-      "id": "tests_test_phase1_phase1pipelinetests_test_ingest_file_emits_pipeline_progress",
-      "community": 7,
-      "norm_label": ".test_ingest_file_emits_pipeline_progress()"
+      "community": 5,
+      "norm_label": ".test_ingest_file_emits_pipeline_progress()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_ingest_file_emits_pipeline_progress"
     },
     {
       "label": ".test_run_ingest_writes_progress_to_stderr_and_usage_to_stdout()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L265",
-      "id": "tests_test_phase1_phase1pipelinetests_test_run_ingest_writes_progress_to_stderr_and_usage_to_stdout",
-      "community": 7,
-      "norm_label": ".test_run_ingest_writes_progress_to_stderr_and_usage_to_stdout()"
+      "community": 2,
+      "norm_label": ".test_run_ingest_writes_progress_to_stderr_and_usage_to_stdout()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_run_ingest_writes_progress_to_stderr_and_usage_to_stdout"
     },
     {
       "label": ".test_run_ingest_uses_async_tui_runner_when_tty()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L338",
-      "id": "tests_test_phase1_phase1pipelinetests_test_run_ingest_uses_async_tui_runner_when_tty",
-      "community": 15,
-      "norm_label": ".test_run_ingest_uses_async_tui_runner_when_tty()"
+      "community": 5,
+      "norm_label": ".test_run_ingest_uses_async_tui_runner_when_tty()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_run_ingest_uses_async_tui_runner_when_tty"
     },
     {
       "label": ".test_parser_writes_transcript_for_request_and_response()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L402",
-      "id": "tests_test_phase1_phase1pipelinetests_test_parser_writes_transcript_for_request_and_response",
       "community": 5,
-      "norm_label": ".test_parser_writes_transcript_for_request_and_response()"
+      "norm_label": ".test_parser_writes_transcript_for_request_and_response()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_parser_writes_transcript_for_request_and_response"
     },
     {
       "label": ".test_parser_writes_fallback_transcript_without_client()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L440",
-      "id": "tests_test_phase1_phase1pipelinetests_test_parser_writes_fallback_transcript_without_client",
-      "community": 7,
-      "norm_label": ".test_parser_writes_fallback_transcript_without_client()"
+      "community": 5,
+      "norm_label": ".test_parser_writes_fallback_transcript_without_client()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_parser_writes_fallback_transcript_without_client"
     },
     {
       "label": ".test_cli_ingest_parser_supports_transcript_optional_path()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L457",
-      "id": "tests_test_phase1_phase1pipelinetests_test_cli_ingest_parser_supports_transcript_optional_path",
-      "community": 7,
-      "norm_label": ".test_cli_ingest_parser_supports_transcript_optional_path()"
+      "community": 5,
+      "norm_label": ".test_cli_ingest_parser_supports_transcript_optional_path()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_cli_ingest_parser_supports_transcript_optional_path"
     },
     {
       "label": ".test_main_returns_130_on_keyboard_interrupt()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L470",
-      "id": "tests_test_phase1_phase1pipelinetests_test_main_returns_130_on_keyboard_interrupt",
-      "community": 7,
-      "norm_label": ".test_main_returns_130_on_keyboard_interrupt()"
+      "community": 5,
+      "norm_label": ".test_main_returns_130_on_keyboard_interrupt()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_main_returns_130_on_keyboard_interrupt"
     },
     {
       "label": ".test_cli_progress_reporter_uses_single_line_updates_on_tty()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L482",
-      "id": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_uses_single_line_updates_on_tty",
-      "community": 15,
-      "norm_label": ".test_cli_progress_reporter_uses_single_line_updates_on_tty()"
+      "community": 5,
+      "norm_label": ".test_cli_progress_reporter_uses_single_line_updates_on_tty()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_uses_single_line_updates_on_tty"
     },
     {
       "label": ".test_cli_progress_reporter_uses_spinner_for_llm_wait_on_tty()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L520",
-      "id": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_uses_spinner_for_llm_wait_on_tty",
-      "community": 15,
-      "norm_label": ".test_cli_progress_reporter_uses_spinner_for_llm_wait_on_tty()"
+      "community": 5,
+      "norm_label": ".test_cli_progress_reporter_uses_spinner_for_llm_wait_on_tty()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_uses_spinner_for_llm_wait_on_tty"
     },
     {
       "label": ".test_cli_progress_reporter_prints_llm_usage_summary_after_spinner()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L557",
-      "id": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_prints_llm_usage_summary_after_spinner",
-      "community": 15,
-      "norm_label": ".test_cli_progress_reporter_prints_llm_usage_summary_after_spinner()"
+      "community": 5,
+      "norm_label": ".test_cli_progress_reporter_prints_llm_usage_summary_after_spinner()",
+      "id": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_prints_llm_usage_summary_after_spinner"
     },
     {
       "label": "_FakeCopilotClient",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L590",
-      "id": "tests_test_phase1_fakecopilotclient",
       "community": 5,
-      "norm_label": "_fakecopilotclient"
+      "norm_label": "_fakecopilotclient",
+      "id": "tests_test_phase1_fakecopilotclient"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L591",
-      "id": "tests_test_phase1_fakecopilotclient_init",
       "community": 5,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "tests_test_phase1_fakecopilotclient_init"
     },
     {
       "label": ".create_session()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L595",
-      "id": "tests_test_phase1_fakecopilotclient_create_session",
       "community": 5,
-      "norm_label": ".create_session()"
+      "norm_label": ".create_session()",
+      "id": "tests_test_phase1_fakecopilotclient_create_session"
     },
     {
       "label": "_FakeCopilotSession",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L600",
-      "id": "tests_test_phase1_fakecopilotsession",
       "community": 5,
-      "norm_label": "_fakecopilotsession"
+      "norm_label": "_fakecopilotsession",
+      "id": "tests_test_phase1_fakecopilotsession"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L601",
-      "id": "tests_test_phase1_fakecopilotsession_init",
       "community": 5,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "tests_test_phase1_fakecopilotsession_init"
     },
     {
       "label": "SessionEvent",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L601",
-      "id": "sessionevent",
       "community": 5,
-      "norm_label": "sessionevent"
+      "norm_label": "sessionevent",
+      "id": "sessionevent"
     },
     {
       "label": "Exception",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L601",
-      "id": "exception",
       "community": 5,
-      "norm_label": "exception"
+      "norm_label": "exception",
+      "id": "exception"
     },
     {
       "label": ".on()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L615",
-      "id": "tests_test_phase1_fakecopilotsession_on",
       "community": 5,
-      "norm_label": ".on()"
+      "norm_label": ".on()",
+      "id": "tests_test_phase1_fakecopilotsession_on"
     },
     {
       "label": ".send_and_wait()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L623",
-      "id": "tests_test_phase1_fakecopilotsession_send_and_wait",
       "community": 5,
-      "norm_label": ".send_and_wait()"
+      "norm_label": ".send_and_wait()",
+      "id": "tests_test_phase1_fakecopilotsession_send_and_wait"
     },
     {
       "label": "_session_event()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L639",
-      "id": "tests_test_phase1_session_event",
       "community": 5,
-      "norm_label": "_session_event()"
+      "norm_label": "_session_event()",
+      "id": "tests_test_phase1_session_event"
     },
     {
       "label": "SessionEventType",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L639",
-      "id": "sessioneventtype",
       "community": 5,
-      "norm_label": "sessioneventtype"
+      "norm_label": "sessioneventtype",
+      "id": "sessioneventtype"
     },
     {
       "label": "_FakeEmbeddingProvider",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L648",
-      "id": "tests_test_phase1_fakeembeddingprovider",
       "community": 5,
-      "norm_label": "_fakeembeddingprovider"
+      "norm_label": "_fakeembeddingprovider",
+      "id": "tests_test_phase1_fakeembeddingprovider"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L649",
-      "id": "tests_test_phase1_fakeembeddingprovider_init",
       "community": 5,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "tests_test_phase1_fakeembeddingprovider_init"
     },
     {
       "label": ".embed_text()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L652",
-      "id": "tests_test_phase1_fakeembeddingprovider_embed_text",
       "community": 5,
-      "norm_label": ".embed_text()"
+      "norm_label": ".embed_text()",
+      "id": "tests_test_phase1_fakeembeddingprovider_embed_text"
     },
     {
       "label": "_FakeNeo4jStore",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L656",
-      "id": "tests_test_phase1_fakeneo4jstore",
-      "community": 5,
-      "norm_label": "_fakeneo4jstore"
+      "community": 1,
+      "norm_label": "_fakeneo4jstore",
+      "id": "tests_test_phase1_fakeneo4jstore"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L657",
-      "id": "tests_test_phase1_fakeneo4jstore_init",
-      "community": 5,
-      "norm_label": ".__init__()"
+      "community": 1,
+      "norm_label": ".__init__()",
+      "id": "tests_test_phase1_fakeneo4jstore_init"
     },
     {
       "label": ".initialize_schema()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L669",
-      "id": "tests_test_phase1_fakeneo4jstore_initialize_schema",
-      "community": 5,
-      "norm_label": ".initialize_schema()"
+      "community": 1,
+      "norm_label": ".initialize_schema()",
+      "id": "tests_test_phase1_fakeneo4jstore_initialize_schema"
     },
     {
       "label": ".persist_source()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L683",
-      "id": "tests_test_phase1_fakeneo4jstore_persist_source",
-      "community": 5,
-      "norm_label": ".persist_source()"
+      "community": 1,
+      "norm_label": ".persist_source()",
+      "id": "tests_test_phase1_fakeneo4jstore_persist_source"
     },
     {
       "label": ".persist_requirements()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L697",
-      "id": "tests_test_phase1_fakeneo4jstore_persist_requirements",
-      "community": 5,
-      "norm_label": ".persist_requirements()"
+      "community": 1,
+      "norm_label": ".persist_requirements()",
+      "id": "tests_test_phase1_fakeneo4jstore_persist_requirements"
     },
     {
       "label": ".find_similar()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L721",
-      "id": "tests_test_phase1_fakeneo4jstore_find_similar",
-      "community": 5,
-      "norm_label": ".find_similar()"
+      "community": 1,
+      "norm_label": ".find_similar()",
+      "id": "tests_test_phase1_fakeneo4jstore_find_similar"
     },
     {
       "label": ".close()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L724",
-      "id": "tests_test_phase1_fakeneo4jstore_close",
-      "community": 5,
-      "norm_label": ".close()"
+      "community": 1,
+      "norm_label": ".close()",
+      "id": "tests_test_phase1_fakeneo4jstore_close"
     },
     {
       "label": "_FakeTtyStream",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L728",
-      "id": "tests_test_phase1_fakettystream",
-      "community": 15,
-      "norm_label": "_fakettystream"
+      "community": 5,
+      "norm_label": "_fakettystream",
+      "id": "tests_test_phase1_fakettystream"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L729",
-      "id": "tests_test_phase1_fakettystream_init",
       "community": 5,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "tests_test_phase1_fakettystream_init"
     },
     {
       "label": ".write()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L732",
-      "id": "tests_test_phase1_fakettystream_write",
-      "community": 15,
-      "norm_label": ".write()"
+      "community": 5,
+      "norm_label": ".write()",
+      "id": "tests_test_phase1_fakettystream_write"
     },
     {
       "label": ".flush()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L736",
-      "id": "tests_test_phase1_fakettystream_flush",
-      "community": 15,
-      "norm_label": ".flush()"
+      "community": 5,
+      "norm_label": ".flush()",
+      "id": "tests_test_phase1_fakettystream_flush"
     },
     {
       "label": ".isatty()",
       "file_type": "code",
       "source_file": "tests/test_phase1.py",
       "source_location": "L739",
-      "id": "tests_test_phase1_fakettystream_isatty",
-      "community": 15,
-      "norm_label": ".isatty()"
+      "community": 5,
+      "norm_label": ".isatty()",
+      "id": "tests_test_phase1_fakettystream_isatty"
     },
     {
       "label": "Return a SentenceTransformerProvider whose embed_text is patched.",
       "file_type": "rationale",
       "source_file": "tests/test_phase1.py",
       "source_location": "L38",
-      "id": "tests_test_phase1_rationale_38",
-      "community": 7,
-      "norm_label": "return a sentencetransformerprovider whose embed_text is patched."
+      "community": 5,
+      "norm_label": "return a sentencetransformerprovider whose embed_text is patched.",
+      "id": "tests_test_phase1_rationale_38"
     },
     {
       "label": "parse_requirement_text falls back to mechanical parse when no client.",
       "file_type": "rationale",
       "source_file": "tests/test_phase1.py",
       "source_location": "L72",
-      "id": "tests_test_phase1_rationale_72",
-      "community": 7,
-      "norm_label": "parse_requirement_text falls back to mechanical parse when no client."
+      "community": 4,
+      "norm_label": "parse_requirement_text falls back to mechanical parse when no client.",
+      "id": "tests_test_phase1_rationale_72"
     },
     {
       "label": "devcontainer-lock.json",
@@ -1037,312 +1415,6 @@
       "community": 9,
       "norm_label": "integrity",
       "id": "devcontainer_devcontainer_lock_ghcr_io_devcontainers_features_node_1_integrity"
-    },
-    {
-      "label": "devcontainer.json",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L1",
-      "community": 8,
-      "norm_label": "devcontainer.json",
-      "id": "devcontainer_devcontainer"
-    },
-    {
-      "label": "name",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L2",
-      "community": 8,
-      "norm_label": "name",
-      "id": "devcontainer_devcontainer_name"
-    },
-    {
-      "label": "dockerComposeFile",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L3",
-      "community": 8,
-      "norm_label": "dockercomposefile",
-      "id": "devcontainer_devcontainer_dockercomposefile"
-    },
-    {
-      "label": "service",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L4",
-      "community": 8,
-      "norm_label": "service",
-      "id": "devcontainer_devcontainer_service"
-    },
-    {
-      "label": "workspaceFolder",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L5",
-      "community": 8,
-      "norm_label": "workspacefolder",
-      "id": "devcontainer_devcontainer_workspacefolder"
-    },
-    {
-      "label": "customizations",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L6",
-      "community": 8,
-      "norm_label": "customizations",
-      "id": "devcontainer_devcontainer_customizations"
-    },
-    {
-      "label": "vscode",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L7",
-      "community": 8,
-      "norm_label": "vscode",
-      "id": "devcontainer_devcontainer_customizations_vscode"
-    },
-    {
-      "label": "extensions",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L8",
-      "community": 8,
-      "norm_label": "extensions",
-      "id": "devcontainer_devcontainer_vscode_extensions"
-    },
-    {
-      "label": "settings",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L21",
-      "community": 6,
-      "norm_label": "settings",
-      "id": "devcontainer_devcontainer_vscode_settings"
-    },
-    {
-      "label": "python.formatting.provider",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L22",
-      "community": 6,
-      "norm_label": "python.formatting.provider",
-      "id": "devcontainer_devcontainer_settings_python_formatting_provider"
-    },
-    {
-      "label": "python.linting.pylintEnabled",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L23",
-      "community": 6,
-      "norm_label": "python.linting.pylintenabled",
-      "id": "devcontainer_devcontainer_settings_python_linting_pylintenabled"
-    },
-    {
-      "label": "python.linting.enabled",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L24",
-      "community": 6,
-      "norm_label": "python.linting.enabled",
-      "id": "devcontainer_devcontainer_settings_python_linting_enabled"
-    },
-    {
-      "label": "python.defaultInterpreterPath",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L26",
-      "community": 6,
-      "norm_label": "python.defaultinterpreterpath",
-      "id": "devcontainer_devcontainer_settings_python_defaultinterpreterpath"
-    },
-    {
-      "label": "python.terminal.activateEnvironment",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L27",
-      "community": 6,
-      "norm_label": "python.terminal.activateenvironment",
-      "id": "devcontainer_devcontainer_settings_python_terminal_activateenvironment"
-    },
-    {
-      "label": "python.analysis.autoImportCompletions",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L28",
-      "community": 6,
-      "norm_label": "python.analysis.autoimportcompletions",
-      "id": "devcontainer_devcontainer_settings_python_analysis_autoimportcompletions"
-    },
-    {
-      "label": "python.analysis.indexing",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L29",
-      "community": 6,
-      "norm_label": "python.analysis.indexing",
-      "id": "devcontainer_devcontainer_settings_python_analysis_indexing"
-    },
-    {
-      "label": "python.analysis.autoSearchPaths",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L30",
-      "community": 6,
-      "norm_label": "python.analysis.autosearchpaths",
-      "id": "devcontainer_devcontainer_settings_python_analysis_autosearchpaths"
-    },
-    {
-      "label": "python.analysis.useImportHeuristic",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L31",
-      "community": 6,
-      "norm_label": "python.analysis.useimportheuristic",
-      "id": "devcontainer_devcontainer_settings_python_analysis_useimportheuristic"
-    },
-    {
-      "label": "[python]",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L32",
-      "community": 6,
-      "norm_label": "[python]",
-      "id": "devcontainer_devcontainer_settings_python"
-    },
-    {
-      "label": "editor.codeActionsOnSave",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L35",
-      "community": 6,
-      "norm_label": "editor.codeactionsonsave",
-      "id": "devcontainer_devcontainer_python_editor_codeactionsonsave"
-    },
-    {
-      "label": "source.organizeImports",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L36",
-      "community": 6,
-      "norm_label": "source.organizeimports",
-      "id": "devcontainer_devcontainer_editor_codeactionsonsave_source_organizeimports"
-    },
-    {
-      "label": "[json]",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L39",
-      "community": 6,
-      "norm_label": "[json]",
-      "id": "devcontainer_devcontainer_settings_json"
-    },
-    {
-      "label": "editor.formatOnSave",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L40",
-      "community": 6,
-      "norm_label": "editor.formatonsave",
-      "id": "devcontainer_devcontainer_json_editor_formatonsave"
-    },
-    {
-      "label": "editor.defaultFormatter",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L41",
-      "community": 6,
-      "norm_label": "editor.defaultformatter",
-      "id": "devcontainer_devcontainer_json_editor_defaultformatter"
-    },
-    {
-      "label": "[jsonc]",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L43",
-      "community": 6,
-      "norm_label": "[jsonc]",
-      "id": "devcontainer_devcontainer_settings_jsonc"
-    },
-    {
-      "label": "isort.args",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L47",
-      "community": 6,
-      "norm_label": "isort.args",
-      "id": "devcontainer_devcontainer_settings_isort_args"
-    },
-    {
-      "label": "python.testing.pytestEnabled",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L51",
-      "community": 6,
-      "norm_label": "python.testing.pytestenabled",
-      "id": "devcontainer_devcontainer_settings_python_testing_pytestenabled"
-    },
-    {
-      "label": "source.fixAll.sortJSON",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L54",
-      "community": 6,
-      "norm_label": "source.fixall.sortjson",
-      "id": "devcontainer_devcontainer_editor_codeactionsonsave_source_fixall_sortjson"
-    },
-    {
-      "label": "features",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L60",
-      "community": 8,
-      "norm_label": "features",
-      "id": "devcontainer_devcontainer_features"
-    },
-    {
-      "label": "ghcr.io/devcontainers/features/node:1",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L61",
-      "community": 8,
-      "norm_label": "ghcr.io/devcontainers/features/node:1",
-      "id": "devcontainer_devcontainer_features_ghcr_io_devcontainers_features_node_1"
-    },
-    {
-      "label": "postCreateCommand",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L63",
-      "community": 8,
-      "norm_label": "postcreatecommand",
-      "id": "devcontainer_devcontainer_postcreatecommand"
-    },
-    {
-      "label": "postStartCommand",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L64",
-      "community": 8,
-      "norm_label": "poststartcommand",
-      "id": "devcontainer_devcontainer_poststartcommand"
-    },
-    {
-      "label": "containerEnv",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L65",
-      "community": 8,
-      "norm_label": "containerenv",
-      "id": "devcontainer_devcontainer_containerenv"
-    },
-    {
-      "label": "GITHUB_TOKEN",
-      "file_type": "code",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L66",
-      "community": 8,
-      "norm_label": "github_token",
-      "id": "devcontainer_devcontainer_containerenv_github_token"
     },
     {
       "label": "post-create.sh",
@@ -1446,7 +1518,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/audit.py",
       "source_location": "L1",
-      "community": 2,
+      "community": 3,
       "norm_label": "audit.py",
       "id": "protoproject_audit"
     },
@@ -1482,7 +1554,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/audit.py",
       "source_location": "L1",
-      "community": 2,
+      "community": 3,
       "norm_label": "mechanical graph audit helpers.",
       "id": "protoproject_audit_rationale_1"
     },
@@ -1797,7 +1869,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L20",
-      "community": 1,
+      "community": 4,
       "norm_label": "llmusagesummary",
       "id": "protoproject_progress_llmusagesummary"
     },
@@ -1806,7 +1878,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L39",
-      "community": 5,
+      "community": 1,
       "norm_label": "ingestprogressevent",
       "id": "protoproject_progress_ingestprogressevent"
     },
@@ -1815,7 +1887,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L54",
-      "community": 5,
+      "community": 1,
       "norm_label": "emit_progress()",
       "id": "protoproject_progress_emit_progress"
     },
@@ -1833,7 +1905,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L54",
-      "community": 5,
+      "community": 1,
       "norm_label": "progressstatus",
       "id": "progressstatus"
     },
@@ -1842,7 +1914,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L82",
-      "community": 1,
+      "community": 15,
       "norm_label": "format_usage_summary()",
       "id": "protoproject_progress_format_usage_summary"
     },
@@ -1860,7 +1932,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L21",
-      "community": 1,
+      "community": 4,
       "norm_label": "best-effort request telemetry for a single llm parse call.",
       "id": "protoproject_progress_rationale_21"
     },
@@ -1869,7 +1941,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L40",
-      "community": 5,
+      "community": 1,
       "norm_label": "structured progress update emitted during ingest.",
       "id": "protoproject_progress_rationale_40"
     },
@@ -1878,7 +1950,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L65",
-      "community": 5,
+      "community": 1,
       "norm_label": "send a progress event if a reporter is configured.",
       "id": "protoproject_progress_rationale_65"
     },
@@ -1887,7 +1959,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/progress.py",
       "source_location": "L83",
-      "community": 1,
+      "community": 15,
       "norm_label": "render a compact, user-facing usage summary.",
       "id": "protoproject_progress_rationale_83"
     },
@@ -2094,7 +2166,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/store.py",
       "source_location": "L34",
-      "community": 5,
+      "community": 1,
       "norm_label": ".initialize_schema()",
       "id": "protoproject_store_neo4jstore_initialize_schema"
     },
@@ -2103,7 +2175,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/store.py",
       "source_location": "L62",
-      "community": 5,
+      "community": 1,
       "norm_label": ".persist_source()",
       "id": "protoproject_store_neo4jstore_persist_source"
     },
@@ -2121,7 +2193,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/store.py",
       "source_location": "L89",
-      "community": 5,
+      "community": 1,
       "norm_label": ".persist_requirements()",
       "id": "protoproject_store_neo4jstore_persist_requirements"
     },
@@ -2175,7 +2247,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/store.py",
       "source_location": "L35",
-      "community": 5,
+      "community": 1,
       "norm_label": "create the constraints and vector index used by phase 1.",
       "id": "protoproject_store_rationale_35"
     },
@@ -2202,7 +2274,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/tui.py",
       "source_location": "L1",
-      "community": 1,
+      "community": 15,
       "norm_label": "tui.py",
       "id": "protoproject_tui"
     },
@@ -2211,7 +2283,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/tui.py",
       "source_location": "L13",
-      "community": 1,
+      "community": 15,
       "norm_label": "ingestreviewapp",
       "id": "protoproject_tui_ingestreviewapp"
     },
@@ -2220,7 +2292,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/tui.py",
       "source_location": "L37",
-      "community": 1,
+      "community": 15,
       "norm_label": ".__init__()",
       "id": "protoproject_tui_ingestreviewapp_init"
     },
@@ -2229,7 +2301,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/tui.py",
       "source_location": "L37",
-      "community": 1,
+      "community": 15,
       "norm_label": "ingestresult",
       "id": "src_protoproject_tui_py_ingestresult"
     },
@@ -2238,7 +2310,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/tui.py",
       "source_location": "L41",
-      "community": 1,
+      "community": 15,
       "norm_label": ".compose()",
       "id": "protoproject_tui_ingestreviewapp_compose"
     },
@@ -2247,7 +2319,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/tui.py",
       "source_location": "L41",
-      "community": 1,
+      "community": 15,
       "norm_label": "composeresult",
       "id": "composeresult"
     },
@@ -2256,7 +2328,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/tui.py",
       "source_location": "L1",
-      "community": 1,
+      "community": 15,
       "norm_label": "read-only textual tui for reviewing phase 1 ingest results.",
       "id": "protoproject_tui_rationale_1"
     },
@@ -2265,7 +2337,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/tui.py",
       "source_location": "L14",
-      "community": 1,
+      "community": 15,
       "norm_label": "display the result of an ingest run in an interactive terminal ui.      phase 1",
       "id": "protoproject_tui_rationale_14"
     },
@@ -2292,7 +2364,7 @@
       "file_type": "code",
       "source_file": "src/protoproject/validator.py",
       "source_location": "L26",
-      "community": 7,
+      "community": 2,
       "norm_label": "build_source_record()",
       "id": "protoproject_validator_build_source_record"
     },
@@ -2364,7 +2436,7 @@
       "file_type": "rationale",
       "source_file": "src/protoproject/validator.py",
       "source_location": "L31",
-      "community": 7,
+      "community": 2,
       "norm_label": "create a stable source record for a raw document.",
       "id": "protoproject_validator_rationale_31"
     },
@@ -2487,6 +2559,486 @@
     }
   ],
   "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_containerenv"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_customizations"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_dockercomposefile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L60",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_features"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_name"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_postcreatecommand"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L64",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_poststartcommand"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_service"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer",
+      "target": "devcontainer_devcontainer_workspacefolder"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_customizations",
+      "target": "devcontainer_devcontainer_customizations_vscode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_customizations_vscode",
+      "target": "devcontainer_devcontainer_vscode_extensions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_customizations_vscode",
+      "target": "devcontainer_devcontainer_vscode_settings"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_json_editor_formatonsave"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L53",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_python_editor_codeactionsonsave"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_editor_codeactionsonsave",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_editor_formatonsave",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_isort_args"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_json"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L43",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_jsonc"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_analysis_autoimportcompletions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_analysis_autosearchpaths"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_analysis_indexing"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_analysis_useimportheuristic"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_defaultinterpreterpath"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_formatting_provider"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_linting_enabled"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_linting_pylintenabled"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_terminal_activateenvironment"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_testing_pytestenabled"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_vscode_settings",
+      "target": "devcontainer_devcontainer_settings_python_testing_unittestenabled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_settings_python",
+      "target": "devcontainer_devcontainer_json_editor_defaultformatter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_settings_python",
+      "target": "devcontainer_devcontainer_json_editor_formatonsave"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_settings_python",
+      "target": "devcontainer_devcontainer_python_editor_codeactionsonsave"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_settings_python",
+      "target": "devcontainer_devcontainer_python_editor_defaultformatter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_settings_python",
+      "target": "devcontainer_devcontainer_python_editor_formatonsave",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_python_editor_codeactionsonsave",
+      "target": "devcontainer_devcontainer_editor_codeactionsonsave_source_fixall_sortjson"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L36",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_python_editor_codeactionsonsave",
+      "target": "devcontainer_devcontainer_editor_codeactionsonsave_source_organizeimports"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_settings_json",
+      "target": "devcontainer_devcontainer_json_editor_defaultformatter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_settings_json",
+      "target": "devcontainer_devcontainer_json_editor_formatonsave"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_settings_jsonc",
+      "target": "devcontainer_devcontainer_json_editor_formatonsave"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_settings_jsonc",
+      "target": "devcontainer_devcontainer_json_editor_defaultformatter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_settings_jsonc",
+      "target": "devcontainer_devcontainer_jsonc_editor_defaultformatter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_settings_jsonc",
+      "target": "devcontainer_devcontainer_jsonc_editor_formatonsave",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_settings_editor_codeactionsonsave",
+      "target": "devcontainer_devcontainer_editor_codeactionsonsave_source_fixall_sortjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_features",
+      "target": "devcontainer_devcontainer_features_ghcr_io_devcontainers_features_node_1"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "devcontainer_devcontainer_containerenv",
+      "target": "devcontainer_devcontainer_containerenv_gemini_api_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".devcontainer/devcontainer.json",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "devcontainer_devcontainer_containerenv",
+      "target": "devcontainer_devcontainer_containerenv_github_token"
+    },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -3635,9 +4187,9 @@
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_embeddings_rationale_12",
-      "target": "protoproject_embeddings_embeddingprovider",
-      "confidence_score": 1.0
+      "target": "protoproject_embeddings_embeddingprovider"
     },
     {
       "relation": "imports",
@@ -3747,9 +4299,9 @@
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_embeddings_rationale_18",
-      "target": "protoproject_embeddings_sentencetransformerprovider",
-      "confidence_score": 1.0
+      "target": "protoproject_embeddings_sentencetransformerprovider"
     },
     {
       "relation": "method",
@@ -3757,9 +4309,9 @@
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_embeddings_sentencetransformerprovider",
-      "target": "protoproject_embeddings_sentencetransformerprovider_configure_hf_warning_filter",
-      "confidence_score": 1.0
+      "target": "protoproject_embeddings_sentencetransformerprovider_configure_hf_warning_filter"
     },
     {
       "relation": "method",
@@ -3767,9 +4319,9 @@
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_embeddings_sentencetransformerprovider",
-      "target": "protoproject_embeddings_sentencetransformerprovider_embed_text",
-      "confidence_score": 1.0
+      "target": "protoproject_embeddings_sentencetransformerprovider_embed_text"
     },
     {
       "relation": "method",
@@ -3829,9 +4381,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L23",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "sessioneventtype",
-      "target": "protoproject_embeddings_sentencetransformerprovider",
-      "confidence_score": 0.5
+      "target": "protoproject_embeddings_sentencetransformerprovider"
     },
     {
       "relation": "uses",
@@ -3941,9 +4493,9 @@
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_embeddings_sentencetransformerprovider_init",
-      "target": "src_protoproject_embeddings_py_progressreporter",
-      "confidence_score": 1.0
+      "target": "src_protoproject_embeddings_py_progressreporter"
     },
     {
       "relation": "calls",
@@ -3952,9 +4504,9 @@
       "source_file": "src/protoproject/embeddings.py",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_embeddings_sentencetransformerprovider_embed_text",
-      "target": "protoproject_embeddings_sentencetransformerprovider_configure_hf_warning_filter",
-      "confidence_score": 1.0
+      "target": "protoproject_embeddings_sentencetransformerprovider_configure_hf_warning_filter"
     },
     {
       "relation": "imports_from",
@@ -4288,9 +4840,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_parse_requirement_text",
-      "target": "requirementdraft",
-      "confidence_score": 1.0
+      "target": "requirementdraft"
     },
     {
       "relation": "references",
@@ -4331,9 +4883,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_rationale_58",
-      "target": "protoproject_parser_parse_requirement_text",
-      "confidence_score": 1.0
+      "target": "protoproject_parser_parse_requirement_text"
     },
     {
       "relation": "calls",
@@ -4586,9 +5138,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L354",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_items_to_drafts",
-      "target": "requirementdraft",
-      "confidence_score": 1.0
+      "target": "requirementdraft"
     },
     {
       "relation": "references",
@@ -4597,9 +5149,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_llm_parse",
-      "target": "requirementdraft",
-      "confidence_score": 1.0
+      "target": "requirementdraft"
     },
     {
       "relation": "references",
@@ -4608,9 +5160,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L383",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_mechanical_parse_fallback",
-      "target": "requirementdraft",
-      "confidence_score": 1.0
+      "target": "requirementdraft"
     },
     {
       "relation": "calls",
@@ -4707,9 +5259,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L226",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_merge_usage_summary",
-      "target": "assistantusagedata",
-      "confidence_score": 1.0
+      "target": "assistantusagedata"
     },
     {
       "relation": "calls",
@@ -4751,9 +5303,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L272",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_add_nullable",
-      "target": "numerict",
-      "confidence_score": 1.0
+      "target": "numerict"
     },
     {
       "relation": "calls",
@@ -4794,9 +5346,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L322",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_rationale_322",
-      "target": "protoproject_parser_extract_text",
-      "confidence_score": 1.0
+      "target": "protoproject_parser_extract_text"
     },
     {
       "relation": "calls",
@@ -4848,9 +5400,9 @@
       "source_file": "src/protoproject/parser.py",
       "source_location": "L384",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "protoproject_parser_rationale_384",
-      "target": "protoproject_parser_mechanical_parse_fallback",
-      "confidence_score": 1.0
+      "target": "protoproject_parser_mechanical_parse_fallback"
     },
     {
       "relation": "calls",
@@ -5026,9 +5578,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L639",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1",
-      "target": "tests_test_phase1_session_event",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_session_event"
     },
     {
       "relation": "calls",
@@ -5157,9 +5709,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L557",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_phase1pipelinetests",
-      "target": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_prints_llm_usage_summary_after_spinner",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_prints_llm_usage_summary_after_spinner"
     },
     {
       "relation": "method",
@@ -5267,9 +5819,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L338",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_phase1pipelinetests",
-      "target": "tests_test_phase1_phase1pipelinetests_test_run_ingest_uses_async_tui_runner_when_tty",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_phase1pipelinetests_test_run_ingest_uses_async_tui_runner_when_tty"
     },
     {
       "relation": "method",
@@ -5375,9 +5927,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L84",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_phase1pipelinetests_test_async_parser_emits_llm_usage_and_progress",
-      "target": "tests_test_phase1_session_event",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_session_event"
     },
     {
       "relation": "calls",
@@ -5474,9 +6026,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L385",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_phase1pipelinetests_test_run_ingest_uses_async_tui_runner_when_tty",
-      "target": "tests_test_phase1_fakettystream",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_fakettystream"
     },
     {
       "relation": "calls",
@@ -5518,9 +6070,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L409",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_phase1pipelinetests_test_parser_writes_transcript_for_request_and_response",
-      "target": "tests_test_phase1_session_event",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_session_event"
     },
     {
       "relation": "calls",
@@ -5551,9 +6103,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L560",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_phase1pipelinetests_test_cli_progress_reporter_prints_llm_usage_summary_after_spinner",
-      "target": "tests_test_phase1_fakettystream",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_fakettystream"
     },
     {
       "relation": "uses",
@@ -5631,9 +6183,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L591",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_fakecopilotclient",
-      "target": "tests_test_phase1_fakecopilotclient_init",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_fakecopilotclient_init"
     },
     {
       "relation": "method",
@@ -5711,9 +6263,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L601",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_fakecopilotsession",
-      "target": "tests_test_phase1_fakecopilotsession_init",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_fakecopilotsession_init"
     },
     {
       "relation": "method",
@@ -5752,9 +6304,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L601",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_fakecopilotsession_init",
-      "target": "exception",
-      "confidence_score": 1.0
+      "target": "exception"
     },
     {
       "relation": "references",
@@ -5763,9 +6315,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L601",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_fakecopilotsession_init",
-      "target": "sessionevent",
-      "confidence_score": 1.0
+      "target": "sessionevent"
     },
     {
       "relation": "uses",
@@ -5856,9 +6408,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L639",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_session_event",
-      "target": "sessionevent",
-      "confidence_score": 1.0
+      "target": "sessionevent"
     },
     {
       "relation": "uses",
@@ -5938,9 +6490,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L639",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_session_event",
-      "target": "sessioneventtype",
-      "confidence_score": 1.0
+      "target": "sessioneventtype"
     },
     {
       "relation": "uses",
@@ -6018,9 +6570,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L649",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_fakeembeddingprovider",
-      "target": "tests_test_phase1_fakeembeddingprovider_init",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_fakeembeddingprovider_init"
     },
     {
       "relation": "method",
@@ -6118,9 +6670,9 @@
       "source_file": "tests/test_phase1.py",
       "source_location": "L657",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_phase1_fakeneo4jstore",
-      "target": "tests_test_phase1_fakeneo4jstore_init",
-      "confidence_score": 1.0
+      "target": "tests_test_phase1_fakeneo4jstore_init"
     },
     {
       "relation": "method",
@@ -6344,396 +6896,6 @@
       "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_lock_features_ghcr_io_devcontainers_features_node_1",
       "target": "devcontainer_devcontainer_lock_ghcr_io_devcontainers_features_node_1_version"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L65",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_containerenv"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_customizations"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_dockercomposefile"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L60",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_features"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_name"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L63",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_postcreatecommand"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L64",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_poststartcommand"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_service"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer",
-      "target": "devcontainer_devcontainer_workspacefolder"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_customizations",
-      "target": "devcontainer_devcontainer_customizations_vscode"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_customizations_vscode",
-      "target": "devcontainer_devcontainer_vscode_extensions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_customizations_vscode",
-      "target": "devcontainer_devcontainer_vscode_settings"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_json_editor_formatonsave"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L53",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_python_editor_codeactionsonsave"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L47",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_isort_args"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L39",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_json"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L43",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_jsonc"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L32",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_analysis_autoimportcompletions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_analysis_autosearchpaths"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_analysis_indexing"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_analysis_useimportheuristic"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_defaultinterpreterpath"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_formatting_provider"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_linting_enabled"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L23",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_linting_pylintenabled"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L27",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_terminal_activateenvironment"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L52",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_testing_pytestenabled"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L33",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_settings_python",
-      "target": "devcontainer_devcontainer_json_editor_defaultformatter"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_settings_python",
-      "target": "devcontainer_devcontainer_json_editor_formatonsave"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L35",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_settings_python",
-      "target": "devcontainer_devcontainer_python_editor_codeactionsonsave"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L54",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_python_editor_codeactionsonsave",
-      "target": "devcontainer_devcontainer_editor_codeactionsonsave_source_fixall_sortjson"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_python_editor_codeactionsonsave",
-      "target": "devcontainer_devcontainer_editor_codeactionsonsave_source_organizeimports"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_settings_json",
-      "target": "devcontainer_devcontainer_json_editor_defaultformatter"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L40",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_settings_json",
-      "target": "devcontainer_devcontainer_json_editor_formatonsave"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L44",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_settings_jsonc",
-      "target": "devcontainer_devcontainer_json_editor_formatonsave"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_settings_jsonc",
-      "target": "devcontainer_devcontainer_json_editor_defaultformatter"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_features",
-      "target": "devcontainer_devcontainer_features_ghcr_io_devcontainers_features_node_1"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "devcontainer_devcontainer_containerenv",
-      "target": "devcontainer_devcontainer_containerenv_github_token"
     },
     {
       "relation": "contains",
@@ -9690,5 +9852,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fa8c4916061204ea40219427298c1805316cebd1"
+  "built_at_commit": "8f875bb2b77ad070a355243e8eeb98d2586f5176"
 }

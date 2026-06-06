@@ -5,9 +5,9 @@
     "semantic_hash": "c9b71de445cbbfceb4ffa2495b1aa7b7"
   },
   ".devcontainer/devcontainer.json": {
-    "mtime": 1780689410.1755724,
-    "ast_hash": "2a626eac39e54d85fd60f680dcfb4fd0",
-    "semantic_hash": "2a626eac39e54d85fd60f680dcfb4fd0"
+    "mtime": 1780757372.8393102,
+    "ast_hash": "eeba8f4f8978e182a31993817d18e853",
+    "semantic_hash": ""
   },
   ".devcontainer/post-create.sh": {
     "mtime": 1780693211.9326713,
