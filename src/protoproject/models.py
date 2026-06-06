@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+from .progress import LLMUsageSummary
+
 
 @dataclass(slots=True)
 class SourceRecord:
@@ -84,6 +86,7 @@ class IngestResult:
     source: SourceRecord
     requirements: list[RequirementRecord]
     issues: list[AuditIssue]
+    llm_usage: LLMUsageSummary | None = None
 
 
 @dataclass(slots=True)

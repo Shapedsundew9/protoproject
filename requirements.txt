@@ -8,3 +8,4 @@ langchain-openai>=0.1.0
 sentence-transformers>=2.7
 pytest
 textual>=0.62.0
+graphifyy

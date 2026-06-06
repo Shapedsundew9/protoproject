@@ -1,0 +1,9 @@
+docs/
+.venv/
+.pytest_cache/
+__pycache__/
+*.egg-info/
+*.md
+*.txt
+.copilot/
+*.yml

@@ -7,6 +7,7 @@ from textual.binding import Binding
 from textual.widgets import DataTable, Footer, Header, Label, TabbedContent, TabPane
 
 from .models import IngestResult
+from .progress import format_usage_summary
 
 
 class IngestReviewApp(App[None]):
@@ -48,6 +49,13 @@ class IngestReviewApp(App[None]):
             f"Requirements: {req_count}  |  Audit issues: {issue_count}",
             classes="summary",
         )
+        if self._result.llm_usage is not None:
+            yield Label(
+                f"LLM Usage: {format_usage_summary(self._result.llm_usage)}",
+                classes="summary",
+            )
+        else:
+            yield Label("LLM Usage: mechanical parser", classes="summary")
         with TabbedContent():
             with TabPane(f"Requirements ({req_count})", id="reqs"):
                 table = DataTable(id="req_table")

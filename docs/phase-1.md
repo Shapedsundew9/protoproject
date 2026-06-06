@@ -112,4 +112,13 @@ The AI proposes the following sharp refinements:
 * **Non-Blocking State Machine:** Because LangGraph manages the state, the TUI simply acts as a view layer. If you exit the terminal, your place in the graph validation queue is completely preserved in Neo4j.
 * **Deterministic Capture:** Option `(4)` can immediately spin up a fast inline `nano`-style terminal text editor if you want to write a comprehensive override paragraph on the spot.
 
+## Current Ingest Feedback
+
+The current Phase 1 ingest command now provides lightweight observability before the review TUI appears:
+
+* Progress is printed to stderr for source loading, LLM parsing, embedding work, auditing, Neo4j writes, and similarity scans.
+* The Copilot parse stage reports immediately when a request starts and surfaces request telemetry after completion.
+* The Copilot SDK does not expose stable "credits" information. ProtoProject reports experimental USD `cost` when available, otherwise token counts and local prompt or response character counts.
+* The Textual interface remains a post-run review surface; live status updates happen in the terminal before launch.
+
 Setting up the node structure with the embedding arrays and a snappy terminal prompt framework right now gives you a bulletproof environment to start feeding in raw vision texts.

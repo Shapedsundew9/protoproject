@@ -8,6 +8,7 @@ from dataclasses import dataclass
 
 from .embeddings import EmbeddingProvider
 from .models import RequirementDraft, RequirementRecord, SourceRecord
+from .progress import ProgressReporter, emit_progress
 
 
 @dataclass(slots=True)
@@ -37,14 +38,25 @@ def build_source_record(
 def normalize_requirements(
     drafts: list[RequirementDraft],
     context: ValidationContext,
+    *,
+    progress: ProgressReporter | None = None,
 ) -> list[RequirementRecord]:
     """Turn parsed drafts into persistence-ready records."""
 
     normalized: list[RequirementRecord] = []
     source_seed = context.source.hash[:8]
     timestamp = int(time.time())
+    total = len(drafts)
 
     for index, draft in enumerate(drafts, start=1):
+        emit_progress(
+            progress,
+            stage="embed_requirements",
+            status="progress",
+            message=f"Embedding requirement {index} of {total}.",
+            current=index,
+            total=total,
+        )
         requirement_id = f"REQ-{source_seed}-{index:04d}"
         parent_id = None
         if draft.parent_index is not None and draft.parent_index < len(normalized):

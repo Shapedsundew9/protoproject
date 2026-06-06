@@ -15,8 +15,8 @@ Establish the core Neo4j database schema, deterministic validation rules, and th
 ### User Experience
 
 * **Input:** The user feeds a raw, unstructured text file (e.g., a meeting transcript or a brain-dump markdown file) into the system.
-* **Interaction:** The user interacts via a simple CLI or basic interface to trigger an ingestion run.
-* **Output:** The user receives a summary report showing that $X$ raw nodes were created, alongside a list of initial structural gaps (e.g., "Requirement Y has no parent").
+* **Interaction:** The user interacts via a simple CLI or basic interface to trigger an ingestion run. The Phase 1 CLI now reports live stage progress during long-running operations so the terminal does not appear frozen while the parser, embeddings, or Neo4j work is in flight.
+* **Output:** The user receives a summary report showing that $X$ raw nodes were created, alongside a list of initial structural gaps (e.g., "Requirement Y has no parent"). When the LLM path is used, the summary also includes request telemetry such as experimental SDK cost, token counts, and prompt or response character counts.
 
 ### Data & Information Flow
 
@@ -24,6 +24,15 @@ Establish the core Neo4j database schema, deterministic validation rules, and th
 2. **Parser $\rightarrow$ Mechanical Validator:** Python routines automatically assign unique IDs, timestamps, and origin metadata.
 3. **Validator $\rightarrow$ Neo4j:** The structured nodes and baseline relationships (`is_child_of`, `depends_on`) are committed directly to Neo4j.
 4. **Graph $\rightarrow$ Mechanical Auditor:** Non-AI Python scripts scan the graph for structural anomalies (orphaned nodes, cyclical dependencies) and flag them.
+
+### Phase 1 Ingest Observability
+
+Phase 1 ingest now treats user feedback as part of the core CLI contract rather than an afterthought:
+
+* Progress is emitted to stderr for every major stage so plain-text summaries on stdout remain script-friendly.
+* The Copilot parse step reports immediately when a request begins and surfaces SDK usage data after completion.
+* The Copilot SDK currently exposes experimental USD `cost` values rather than a stable "credits" abstraction, so ProtoProject reports cost when present and falls back to tokens and character counts when it is not.
+* The existing Textual review UI remains post-run in Phase 1; live feedback happens before the TUI launches.
 
 ```mermaid
 flowchart LR

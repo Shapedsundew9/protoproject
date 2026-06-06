@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any
 
 from neo4j import GraphDatabase
+from neo4j.exceptions import Neo4jError
 
 from .models import RequirementRecord, SourceRecord
+from .progress import ProgressReporter, emit_progress
 
 
 @dataclass(slots=True)
@@ -17,6 +20,8 @@ class Neo4jStore:
     username: str
     password: str
     embedding_dimension: int = 32
+    progress: ProgressReporter | None = None
+    _driver: Any = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
         self._driver = GraphDatabase.driver(
@@ -29,6 +34,12 @@ class Neo4jStore:
     def initialize_schema(self) -> None:
         """Create the constraints and vector index used by Phase 1."""
 
+        emit_progress(
+            self.progress,
+            stage="schema_init",
+            status="started",
+            message="Initializing Neo4j schema.",
+        )
         statements = [
             "CREATE CONSTRAINT requirement_id IF NOT EXISTS FOR (r:Requirement) REQUIRE r.id IS UNIQUE",
             "CREATE CONSTRAINT source_id IF NOT EXISTS FOR (s:Source) REQUIRE s.id IS UNIQUE",
@@ -41,8 +52,20 @@ class Neo4jStore:
         with self._driver.session() as session:
             for statement in statements:
                 session.run(statement)
+        emit_progress(
+            self.progress,
+            stage="schema_init",
+            status="completed",
+            message="Neo4j schema ready.",
+        )
 
     def persist_source(self, source: SourceRecord) -> None:
+        emit_progress(
+            self.progress,
+            stage="persist_source",
+            status="started",
+            message=f"Persisting source {source.id}.",
+        )
         with self._driver.session() as session:
             session.run(
                 """
@@ -56,10 +79,23 @@ class Neo4jStore:
                 hash=source.hash,
                 path=source.path,
             )
+        emit_progress(
+            self.progress,
+            stage="persist_source",
+            status="completed",
+            message=f"Persisted source {source.id}.",
+        )
 
     def persist_requirements(self, requirements: list[RequirementRecord]) -> None:
+        total = len(requirements)
+        emit_progress(
+            self.progress,
+            stage="persist_requirements",
+            status="started",
+            message=f"Persisting {total} requirements.",
+        )
         with self._driver.session() as session:
-            for requirement in requirements:
+            for index, requirement in enumerate(requirements, start=1):
                 session.run(
                     """
                     MERGE (r:Requirement {id: $id})
@@ -86,6 +122,14 @@ class Neo4jStore:
                     supersedes_id=requirement.supersedes_id,
                     source_id=requirement.source_id,
                 )
+                emit_progress(
+                    self.progress,
+                    stage="persist_requirements",
+                    status="progress",
+                    message=f"Persisted requirement {index} of {total}.",
+                    current=index,
+                    total=total,
+                )
 
             for requirement in requirements:
                 if requirement.parent_id:
@@ -108,6 +152,12 @@ class Neo4jStore:
                         child_id=requirement.id,
                         dependency_id=dependency_id,
                     )
+        emit_progress(
+            self.progress,
+            stage="persist_requirements",
+            status="completed",
+            message=f"Persisted {total} requirements and relationships.",
+        )
 
     def persist_requirement_revision(self, revision: RequirementRecord) -> None:
         """Persist a refinement revision and mark the prior version chain."""
@@ -207,7 +257,7 @@ class Neo4jStore:
                     {"id": row["id"], "text": row["text"], "score": row["score"]}
                     for row in result
                 ]
-        except Exception:  # noqa: BLE001
+        except Neo4jError:
             # Vector index may not be available (e.g., Community edition without
             # the vector plugin, or schema not yet initialised).
             return []
