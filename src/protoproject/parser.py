@@ -30,7 +30,8 @@ _NumericT = TypeVar("_NumericT", int, float)
 log = logging.getLogger(__name__)
 
 _LLM_PARSE_STAGE = "llm_parse"
-_LLM_HEARTBEAT_SECONDS = 5.0
+_LLM_HEARTBEAT_SECONDS = 0.2
+_LLM_WAIT_TIMEOUT_SECONDS = 120.0
 
 _PARSE_PROMPT = """\
 Extract all distinct, atomic software requirements from the text below.
@@ -176,7 +177,10 @@ async def _llm_parse(
                 f"{prompt}"
             ),
         )
-        response = await session.send_and_wait(prompt=prompt)
+        response = await session.send_and_wait(
+            prompt=prompt,
+            timeout=_LLM_WAIT_TIMEOUT_SECONDS,
+        )
     finally:
         unsubscribe()
         heartbeat_task.cancel()

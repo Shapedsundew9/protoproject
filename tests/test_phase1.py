@@ -144,6 +144,7 @@ class Phase1PipelineTests(unittest.TestCase):
         self.assertEqual(summary.token_limit, 4096)
         self.assertEqual(summary.output_chars, len(response_text))
         self.assertGreater(summary.input_chars, len(raw_text))
+        self.assertEqual(session.timeout, 120.0)
 
     def test_async_parser_reports_fallback_when_llm_fails(self) -> None:
         raw_text = "- The system must work.\n"
@@ -553,6 +554,38 @@ class Phase1PipelineTests(unittest.TestCase):
         self.assertIn("6.0s", stream.value)
         self.assertIn("done", stream.value)
 
+    def test_cli_progress_reporter_prints_llm_usage_summary_after_spinner(self) -> None:
+        from protoproject import cli as cli_module  # noqa: PLC0415
+
+        stream = _FakeTtyStream()
+        reporter = cli_module.CliProgressReporter(stream)
+
+        reporter(
+            IngestProgressEvent(
+                stage="llm_parse",
+                status="completed",
+                message="Copilot parse completed.",
+                elapsed_seconds=8.0,
+                usage=LLMUsageSummary(
+                    model="gpt-5.4",
+                    cost_usd=0.0125,
+                    input_tokens=150,
+                    output_tokens=60,
+                    cache_read_tokens=10,
+                    cache_write_tokens=0,
+                    reasoning_tokens=0,
+                    context_tokens=123,
+                    token_limit=4096,
+                    input_chars=400,
+                    output_chars=180,
+                ),
+            )
+        )
+
+        self.assertEqual(stream.value.count("\n"), 2)
+        self.assertIn("[ingest:llm parse]", stream.value)
+        self.assertIn("cost $0.0125", stream.value)
+
 
 class _FakeCopilotClient:
     def __init__(self, session: "_FakeCopilotSession") -> None:
@@ -577,6 +610,7 @@ class _FakeCopilotSession:
         self._error = error
         self._handlers = []
         self.prompt = ""
+        self.timeout = None
 
     def on(self, handler):
         self._handlers.append(handler)
@@ -586,8 +620,14 @@ class _FakeCopilotSession:
 
         return unsubscribe
 
-    async def send_and_wait(self, *, prompt: str) -> SessionEvent | None:
+    async def send_and_wait(
+        self,
+        *,
+        prompt: str,
+        timeout: float = 60.0,
+    ) -> SessionEvent | None:
         self.prompt = prompt
+        self.timeout = timeout
         for event in self._emitted_events:
             for handler in list(self._handlers):
                 handler(event)

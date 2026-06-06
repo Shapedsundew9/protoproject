@@ -31,6 +31,8 @@ class CliProgressReporter:
             self._write_inline(self._format_inline_event(event))
             if event.status in {"completed", "fallback", "error", "cancelled"}:
                 self._finish_inline()
+                if event.stage == "llm_parse" and event.usage is not None:
+                    print(self._format_event(event), file=self._stream, flush=True)
             else:
                 self._active_inline_stage = event.stage
             return
@@ -225,7 +227,7 @@ async def _run_ingest(
 
     use_tui = not plain and sys.stdout.isatty()
     if use_tui:
-        IngestReviewApp(result).run()
+        await IngestReviewApp(result).run_async()
     else:
         print(f"Source:               {result.source.id}")
         print(f"Requirements created: {len(result.requirements)}")
