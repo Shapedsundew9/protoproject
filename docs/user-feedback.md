@@ -17,3 +17,10 @@ We need to add a --transcript CLI option to record what is going on behind the s
 ## Pylint
 
 Please add configuration I think in the toml file if possible. So that pylint does not require Docstrings in the tests.
+
+## Why?
+
+The current ingestion process requires refinement to allow for the explicit selection of target projects during creation and data entry.
+
+Additionally, the system must transition from simply referencing sources to storing a complete, verbatim copy of every ingested document. This is a critical requirement for future-proofing; should the project later utilize more advanced LLMs or refined embedding techniques, having access to the original source text will be essential for regenerating or re-analyzing requirements accurately.
+An additional deficiency identified in the current system is that while requirements are documented, the underlying rationale—the "why"—is omitted. Capturing this reasoning is essential, as shared justifications across various requirements can coalesce into a comprehensive user story, clarifying the ultimate objective of the build. Consequently, the ingestion process must be updated to mandate the inclusion of this rationale for every requirement.

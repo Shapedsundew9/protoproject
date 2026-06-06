@@ -35,7 +35,7 @@ Phase 1 delivered a complete ingest pipeline: raw text → LLM/mechanical parser
 
 The `state` field on `RequirementRecord` (already persisted in Neo4j) is the checkpoint:
 
-```
+```text
 Draft  →  Under_Review  →  Stabilized
                        →  Superseded   (old version, replaced by new Draft/Stabilized)
 ```
@@ -74,7 +74,7 @@ Defines `RefinementWorkflow` wrapping a compiled LangGraph `StateGraph`.
 
 **Graph nodes and wiring:**
 
-```
+```text
 mark_under_review
     → evaluate
     → [no issues]  mark_stabilized → commit
@@ -203,7 +203,7 @@ Replace the read-only `IngestReviewApp` with a single **`ProtoProjectApp`** that
 
 **Structure:**
 
-```
+```text
 ProtoProjectApp
 ├── Header (title changes per mode)
 ├── TabbedContent
@@ -244,7 +244,7 @@ The app returns a `HumanDecision` from `run()` which the CLI passes to `workflow
 
 **New argument parser entry:**
 
-```
+```text
 protoproject refine [--limit N] [--no-tui] [--req-id REQ_ID]
 ```
 
@@ -254,7 +254,7 @@ protoproject refine [--limit N] [--no-tui] [--req-id REQ_ID]
 
 **`_run_refine()` function:**
 
-```
+```text
 1. Connect to Neo4jStore (same env-based config as ingest).
 2. Call store.load_refinement_queue(limit).
 3. Print opening summary: "X Draft, Y Under_Review queued."
@@ -270,7 +270,7 @@ protoproject refine [--limit N] [--no-tui] [--req-id REQ_ID]
 
 Progress lines (stderr, consistent with Phase 1 style):
 
-```
+```text
 [refine:evaluate]  REQ-001 | 2 issues (high)     → needs_human
 [refine:auto]      REQ-002 | 1 issue  (medium)   → stabilized  (v2)
 [refine:human]     REQ-003 | accepted by user     → stabilized  (v2)
