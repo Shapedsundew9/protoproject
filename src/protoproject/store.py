@@ -43,6 +43,7 @@ class Neo4jStore:
         statements = [
             "CREATE CONSTRAINT requirement_id IF NOT EXISTS FOR (r:Requirement) REQUIRE r.id IS UNIQUE",
             "CREATE CONSTRAINT source_id IF NOT EXISTS FOR (s:Source) REQUIRE s.id IS UNIQUE",
+            "CREATE CONSTRAINT project_id IF NOT EXISTS FOR (p:Project) REQUIRE p.id IS UNIQUE",
             (
                 "CREATE VECTOR INDEX requirement_embedding_index IF NOT EXISTS "
                 "FOR (r:Requirement) ON (r.embedding) "
@@ -59,6 +60,26 @@ class Neo4jStore:
             message="Neo4j schema ready.",
         )
 
+    def persist_project(self, project_id: str, name: str = "") -> None:
+        """Idempotently create or update a Project node."""
+        with self._driver.session() as session:
+            session.run(
+                """
+                MERGE (p:Project {id: $id})
+                SET p.name = CASE WHEN $name <> '' THEN $name ELSE coalesce(p.name, $id) END
+                """,
+                id=project_id,
+                name=name,
+            )
+
+    def list_projects(self) -> list[dict]:
+        """Return all Project nodes as a list of {id, name} dicts."""
+        with self._driver.session() as session:
+            result = session.run(
+                "MATCH (p:Project) RETURN p.id AS id, p.name AS name ORDER BY p.name"
+            )
+            return [{"id": row["id"], "name": row["name"]} for row in result]
+
     def persist_source(self, source: SourceRecord) -> None:
         emit_progress(
             self.progress,
@@ -72,13 +93,25 @@ class Neo4jStore:
                 MERGE (s:Source {id: $id})
                 SET s.type = $type,
                     s.hash = $hash,
-                    s.path = $path
+                    s.path = $path,
+                    s.content = $content
                 """,
                 id=source.id,
                 type=source.type,
                 hash=source.hash,
                 path=source.path,
+                content=source.content,
             )
+            if source.project_id:
+                session.run(
+                    """
+                    MATCH (s:Source {id: $source_id})
+                    MATCH (p:Project {id: $project_id})
+                    MERGE (s)-[:BELONGS_TO]->(p)
+                    """,
+                    source_id=source.id,
+                    project_id=source.project_id,
+                )
         emit_progress(
             self.progress,
             stage="persist_source",
@@ -106,7 +139,8 @@ class Neo4jStore:
                         r.state = $state,
                         r.version = $version,
                         r.timestamp = $timestamp,
-                        r.supersedes_id = $supersedes_id
+                        r.supersedes_id = $supersedes_id,
+                        r.rationale = $rationale
                     WITH r
                     MATCH (s:Source {id: $source_id})
                     MERGE (r)-[:ORIGINATED_FROM]->(s)
@@ -121,6 +155,16 @@ class Neo4jStore:
                     timestamp=requirement.timestamp,
                     supersedes_id=requirement.supersedes_id,
                     source_id=requirement.source_id,
+                    rationale=requirement.rationale,
+                )
+                # Link requirement to project via the source node.
+                session.run(
+                    """
+                    MATCH (r:Requirement {id: $req_id})-[:ORIGINATED_FROM]->(s:Source)
+                          -[:BELONGS_TO]->(p:Project)
+                    MERGE (r)-[:BELONGS_TO]->(p)
+                    """,
+                    req_id=requirement.id,
                 )
                 emit_progress(
                     self.progress,
@@ -173,7 +217,8 @@ class Neo4jStore:
                     r.state = $state,
                     r.version = $version,
                     r.timestamp = $timestamp,
-                    r.supersedes_id = $supersedes_id
+                    r.supersedes_id = $supersedes_id,
+                    r.rationale = $rationale
                 WITH r
                 MATCH (s:Source {id: $source_id})
                 MERGE (r)-[:ORIGINATED_FROM]->(s)
@@ -188,6 +233,7 @@ class Neo4jStore:
                 timestamp=revision.timestamp,
                 supersedes_id=revision.supersedes_id,
                 source_id=revision.source_id,
+                rationale=revision.rationale,
             )
 
             if revision.supersedes_id:
@@ -305,6 +351,7 @@ class Neo4jStore:
                         parent_id=node.get("parent_id"),
                         supersedes_id=node.get("supersedes_id"),
                         depends_on_ids=[],
+                        rationale=node.get("rationale") or "",
                     )
                 )
             return records

@@ -16,6 +16,8 @@ class SourceRecord:
     type: str
     hash: str
     path: str
+    project_id: str = ""
+    content: str = ""
 
 
 @dataclass(slots=True)
@@ -27,6 +29,7 @@ class RequirementDraft:
     depends_on_indices: list[int] = field(default_factory=list)
     concern_value: int = 3
     layer: str = "Product"
+    rationale: str = ""
 
 
 @dataclass(slots=True)
@@ -45,6 +48,7 @@ class RequirementRecord:
     parent_id: str | None = None
     depends_on_ids: list[str] = field(default_factory=list)
     supersedes_id: str | None = None
+    rationale: str = ""
 
 
 @dataclass(slots=True)

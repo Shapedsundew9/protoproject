@@ -61,7 +61,10 @@ class Phase1PipelineTests(unittest.TestCase):
         self.assertTrue(all(len(req.embedding) == 384 for req in requirements))
 
         issues = audit_requirements(requirements)
-        self.assertEqual(issues, [])
+        # MISSING_RATIONALE is expected when the mechanical fallback runs without
+        # a default_rationale; only structural issues (cycles, missing refs) must be absent.
+        structural_issues = [i for i in issues if i.code != "MISSING_RATIONALE"]
+        self.assertEqual(structural_issues, [])
 
     def test_parser_ignores_blank_lines(self) -> None:
         drafts = _mechanical_parse_fallback("\n\nThe system must work.\n\n")
@@ -293,8 +296,9 @@ class Phase1PipelineTests(unittest.TestCase):
             copilot_client=None,
             progress=None,
             transcript=None,
+            project_id="",
         ):
-            _ = path, copilot_client
+            _ = path, copilot_client, project_id
             self.assertIsNone(transcript)
             emit_progress(
                 progress,
@@ -316,6 +320,7 @@ class Phase1PipelineTests(unittest.TestCase):
         with (
             patch.dict("os.environ", {}, clear=True),
             patch.object(cli_module, "ingest_file", fake_ingest_file),
+            patch.object(cli_module, "_pick_project", return_value="test-project"),
             patch.object(sys, "stdout", stdout),
             patch.object(sys, "stderr", stderr),
         ):
@@ -355,8 +360,9 @@ class Phase1PipelineTests(unittest.TestCase):
             copilot_client=None,
             progress=None,
             transcript=None,
+            project_id="",
         ):
-            _ = path, copilot_client, progress, transcript
+            _ = path, copilot_client, progress, transcript, project_id
             return result
 
         app_called = {"run": 0}
@@ -381,6 +387,7 @@ class Phase1PipelineTests(unittest.TestCase):
             patch.dict("os.environ", {}, clear=True),
             patch.object(cli_module, "ingest_file", fake_ingest_file),
             patch.object(cli_module, "IngestReviewApp", _FakeApp),
+            patch.object(cli_module, "_pick_project", return_value="test-project"),
             patch.object(sys, "stdout", stdout),
             patch.object(sys, "stderr", stderr),
         ):
@@ -460,7 +467,10 @@ class Phase1PipelineTests(unittest.TestCase):
         def raising_run(*args, **kwargs):
             raise KeyboardInterrupt
 
-        with patch.object(cli_module, "_run_ingest", side_effect=raising_run):
+        with (
+            patch.object(cli_module, "_run_ingest", side_effect=raising_run),
+            patch.object(cli_module, "_pick_project", return_value="test-project"),
+        ):
             exit_code = cli_module.main(["ingest", "docs/vision.md", "--no-tui"])
 
         self.assertEqual(exit_code, 130)
@@ -571,6 +581,98 @@ class Phase1PipelineTests(unittest.TestCase):
         self.assertEqual(stream.value.count("\n"), 2)
         self.assertIn("[ingest:llm parse]", stream.value)
         self.assertIn("cost $0.0125", stream.value)
+
+    def test_rationale_extracted_by_llm_parser(self) -> None:
+        """_items_to_drafts populates rationale from LLM JSON output."""
+        from protoproject.parser import _items_to_drafts  # noqa: PLC0415
+
+        items = [
+            {
+                "text": "The system must store requirements.",
+                "layer": "Product",
+                "concern_value": 3,
+                "parent_text": None,
+                "rationale": "Persistent storage is needed to survive service restarts.",
+            }
+        ]
+        drafts = _items_to_drafts(items)
+        self.assertEqual(len(drafts), 1)
+        self.assertEqual(
+            drafts[0].rationale,
+            "Persistent storage is needed to survive service restarts.",
+        )
+
+    def test_rationale_default_used_in_mechanical_fallback(self) -> None:
+        """_mechanical_parse_fallback stamps every draft with default_rationale."""
+        from protoproject.parser import _mechanical_parse_fallback  # noqa: PLC0415
+
+        raw_text = "- The system must work.\n- The system must scale.\n"
+        default = "Derived from initial product vision document."
+        drafts = _mechanical_parse_fallback(raw_text, default_rationale=default)
+        self.assertEqual(len(drafts), 2)
+        for draft in drafts:
+            self.assertEqual(draft.rationale, default)
+
+    def test_missing_rationale_produces_audit_issue(self) -> None:
+        """audit_requirements flags requirements with empty rationale."""
+        source = build_source_record("test")
+        req = RequirementRecord(
+            id="REQ-A",
+            text="The system must work.",
+            embedding=_FAKE_EMBED,
+            layer="Product",
+            concern_value=3,
+            state="Draft",
+            version=1,
+            timestamp=0,
+            source_id=source.id,
+            rationale="",  # intentionally empty
+        )
+        issues = audit_requirements([req])
+        codes = {i.code for i in issues}
+        self.assertIn("MISSING_RATIONALE", codes)
+
+    def test_rationale_populated_requirement_passes_audit(self) -> None:
+        """audit_requirements does NOT flag a requirement that has a rationale."""
+        source = build_source_record("test")
+        req = RequirementRecord(
+            id="REQ-A",
+            text="The system must work.",
+            embedding=_FAKE_EMBED,
+            layer="Product",
+            concern_value=3,
+            state="Draft",
+            version=1,
+            timestamp=0,
+            source_id=source.id,
+            rationale="Ensures the service is operational under normal conditions.",
+        )
+        issues = audit_requirements([req])
+        codes = {i.code for i in issues}
+        self.assertNotIn("MISSING_RATIONALE", codes)
+
+    def test_cli_ingest_parser_accepts_project_flag(self) -> None:
+        """--project flag is accepted by the ingest subparser."""
+        from protoproject import cli as cli_module  # noqa: PLC0415
+
+        arg_parser = cli_module._build_arg_parser()
+        args = arg_parser.parse_args(["ingest", "docs/vision.md", "--project", "MyProject"])
+        self.assertEqual(args.project, "MyProject")
+
+    def test_cli_ingest_parser_no_project_defaults_to_none(self) -> None:
+        """--project defaults to None when omitted (triggers picker at runtime)."""
+        from protoproject import cli as cli_module  # noqa: PLC0415
+
+        arg_parser = cli_module._build_arg_parser()
+        args = arg_parser.parse_args(["ingest", "docs/vision.md"])
+        self.assertIsNone(args.project)
+
+    def test_source_record_stores_verbatim_content(self) -> None:
+        """build_source_record stores the full raw text in the content field."""
+        raw = "# Requirements\n- The system must work.\n"
+        source = build_source_record(raw, path="docs/vision.md", project_id="P1")
+        self.assertEqual(source.content, raw)
+        self.assertEqual(source.project_id, "P1")
 
 
 class _FakeCopilotClient:

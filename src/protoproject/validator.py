@@ -27,12 +27,24 @@ def build_source_record(
     raw_text: str,
     path: str = "",
     source_type: str = "Markdown",
+    project_id: str = "",
 ) -> SourceRecord:
-    """Create a stable source record for a raw document."""
+    """Create a stable source record for a raw document.
+
+    *raw_text* is stored verbatim on the record so the original document is
+    always available for future re-analysis or embedding regeneration.
+    """
 
     digest = hashlib.sha256(raw_text.encode("utf-8")).hexdigest()
     source_id = f"SRC-{digest[:8].upper()}"
-    return SourceRecord(id=source_id, type=source_type, hash=digest, path=path)
+    return SourceRecord(
+        id=source_id,
+        type=source_type,
+        hash=digest,
+        path=path,
+        project_id=project_id,
+        content=raw_text,
+    )
 
 
 def normalize_requirements(
@@ -80,6 +92,7 @@ def normalize_requirements(
                 source_id=context.source.id,
                 parent_id=parent_id,
                 depends_on_ids=[],
+                rationale=draft.rationale,
             )
         )
 

@@ -183,6 +183,15 @@ def _build_arg_parser():
     ingest_p = subparsers.add_parser("ingest", help="Ingest a raw text file")
     ingest_p.add_argument("path", type=Path)
     ingest_p.add_argument(
+        "--project",
+        metavar="PROJECT_ID",
+        default=None,
+        help=(
+            "Project to assign the ingested requirements to. "
+            "If omitted, an interactive picker is shown."
+        ),
+    )
+    ingest_p.add_argument(
         "--transcript",
         nargs="?",
         const=Path("transcript.log"),
@@ -229,10 +238,83 @@ def _build_arg_parser():
     return parser
 
 
+def _pick_project(
+    plain: bool,
+    config,
+    *,
+    preselected: str | None = None,
+) -> str:
+    """Resolve which project this ingest run belongs to.
+
+    Resolution order:
+    1. *preselected* — supplied via ``--project`` flag; used immediately.
+    2. Interactive TUI / plain-text picker — queries Neo4j for existing projects
+       and lets the user select one or enter a new name.
+
+    Returns the chosen project ID (non-empty string).
+    """
+    if preselected:
+        return preselected.strip()
+
+    # Query Neo4j for existing projects.
+    store = Neo4jStore(
+        uri=config.neo4j_uri,
+        username=config.neo4j_username,
+        password=config.neo4j_password,
+        embedding_dimension=config.embedding_dimension,
+    )
+    try:
+        store.initialize_schema()
+        projects = store.list_projects()
+    finally:
+        store.close()
+
+    use_tui = not plain and sys.stdout.isatty()
+
+    if use_tui:
+        from .tui import ProjectPickerApp  # noqa: PLC0415
+        chosen = ProjectPickerApp(projects=projects).run()
+        if chosen:
+            return chosen
+        # User closed the TUI without selecting — fall through to plain-text.
+
+    # Plain-text fallback.
+    print("\n── Project Selection ──", file=sys.stderr)
+    if projects:
+        print("Existing projects:", file=sys.stderr)
+        for i, p in enumerate(projects, start=1):
+            print(f"  [{i}] {p['id']}", file=sys.stderr)
+        print(
+            "  [n] Enter a new project ID",
+            file=sys.stderr,
+        )
+        while True:
+            try:
+                choice = input("Select project number or 'n' for new: ").strip()
+            except EOFError:
+                choice = "n"
+            if choice.isdigit():
+                idx = int(choice) - 1
+                if 0 <= idx < len(projects):
+                    return projects[idx]["id"]
+            if choice.lower() in ("n", ""):
+                break
+
+    while True:
+        try:
+            new_id = input("New project ID: ").strip()
+        except EOFError:
+            new_id = ""
+        if new_id:
+            return new_id
+        print("[error] Project ID cannot be empty.", file=sys.stderr)
+
+
 def _run_ingest(
     path: Path,
     plain: bool,
     transcript: Path | None = None,
+    project_id: str = "",
 ) -> int:
     token = os.getenv("COPILOT_GITHUB_TOKEN") or os.getenv("GITHUB_TOKEN")
     copilot_client = None
@@ -259,6 +341,7 @@ def _run_ingest(
             copilot_client=copilot_client,
             progress=reporter,
             transcript=transcript,
+            project_id=project_id,
         )
     except KeyboardInterrupt:
         reporter.close()
@@ -471,10 +554,17 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "ingest":
         try:
+            cfg = load_config()
+            project_id = _pick_project(
+                plain=args.no_tui,
+                config=cfg,
+                preselected=args.project,
+            )
             return _run_ingest(
                 args.path,
                 plain=args.no_tui,
                 transcript=args.transcript,
+                project_id=project_id,
             )
         except KeyboardInterrupt:
             return 130

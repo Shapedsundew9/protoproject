@@ -41,7 +41,10 @@ class TestStorePhase2(unittest.TestCase):
             type="Test",
             hash="deadbeef" * 8,
             path="test_store_phase2.py",
+            project_id="PROJ-PHASE2-TEST",
+            content="Test source content for phase 2 integration tests.",
         )
+        cls.store.persist_project("PROJ-PHASE2-TEST", name="Phase 2 Test Project")
         cls.store.persist_source(source)
 
         cls.test_req = RequirementRecord(
@@ -54,6 +57,7 @@ class TestStorePhase2(unittest.TestCase):
             version=1,
             timestamp=int(time.time()),
             source_id="SRC-PHASE2-TEST",
+            rationale="Required to validate Neo4j persistence for Phase 2.",
         )
         cls.store.persist_requirements([cls.test_req])
 
@@ -66,6 +70,9 @@ class TestStorePhase2(unittest.TestCase):
             )
             session.run(
                 "MATCH (s:Source {id: 'SRC-PHASE2-TEST'}) DETACH DELETE s"
+            )
+            session.run(
+                "MATCH (p:Project {id: 'PROJ-PHASE2-TEST'}) DETACH DELETE p"
             )
         cls.store.close()
 
@@ -93,6 +100,7 @@ class TestStorePhase2(unittest.TestCase):
             version=1,
             timestamp=int(_time.time()) + 100,  # later timestamp
             source_id="SRC-PHASE2-TEST",
+            rationale="Ordering verification requirement.",
         )
         self.store.persist_requirements([second])
 
@@ -127,6 +135,58 @@ class TestStorePhase2(unittest.TestCase):
         total = sum(counts.values())
         self.assertGreater(total, 0)
         self.assertIn("Draft", counts)
+
+    def test_persist_and_load_project_node(self) -> None:
+        """Project node exists and Source is linked via BELONGS_TO."""
+        projects = self.store.list_projects()
+        project_ids = [p["id"] for p in projects]
+        self.assertIn("PROJ-PHASE2-TEST", project_ids)
+
+        # Verify the Source node has a BELONGS_TO edge to the Project.
+        with self.store._driver.session() as session:
+            result = session.run(
+                """
+                MATCH (s:Source {id: 'SRC-PHASE2-TEST'})-[:BELONGS_TO]->(p:Project)
+                RETURN p.id AS pid
+                """
+            )
+            rows = list(result)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["pid"], "PROJ-PHASE2-TEST")
+
+    def test_source_content_stored_verbatim(self) -> None:
+        """Source node carries the verbatim content property."""
+        with self.store._driver.session() as session:
+            result = session.run(
+                "MATCH (s:Source {id: 'SRC-PHASE2-TEST'}) RETURN s.content AS content"
+            )
+            rows = list(result)
+        self.assertEqual(len(rows), 1)
+        self.assertIn("Test source content", rows[0]["content"])
+
+    def test_requirement_rationale_round_trips(self) -> None:
+        """Rationale written during persist_requirements is readable back out."""
+        queue = self.store.load_refinement_queue(limit=1000)
+        match = next((r for r in queue if r.id == self.test_req.id), None)
+        self.assertIsNotNone(match)
+        self.assertEqual(
+            match.rationale,
+            "Required to validate Neo4j persistence for Phase 2.",
+        )
+
+    def test_requirement_belongs_to_project(self) -> None:
+        """Requirement has a BELONGS_TO edge pointing to the Project node."""
+        with self.store._driver.session() as session:
+            result = session.run(
+                """
+                MATCH (r:Requirement {id: $req_id})-[:BELONGS_TO]->(p:Project)
+                RETURN p.id AS pid
+                """,
+                req_id=self.test_req.id,
+            )
+            rows = list(result)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["pid"], "PROJ-PHASE2-TEST")
 
 
 if __name__ == "__main__":

@@ -12,6 +12,7 @@ def audit_requirements(requirements: list[RequirementRecord]) -> list[AuditIssue
 
     Detects:
     - Empty requirement text
+    - Missing rationale (why the requirement exists)
     - Missing parent references
     - Missing dependency references
     - Cycles in the combined parent + depends_on graph
@@ -26,6 +27,17 @@ def audit_requirements(requirements: list[RequirementRecord]) -> list[AuditIssue
                 AuditIssue(
                     code="EMPTY_TEXT",
                     message="Requirement text is empty.",
+                    requirement_id=req.id,
+                )
+            )
+        if not req.rationale.strip():
+            issues.append(
+                AuditIssue(
+                    code="MISSING_RATIONALE",
+                    message=(
+                        "Requirement has no rationale. Capturing the 'why' is required "
+                        "to group related requirements into user stories."
+                    ),
                     requirement_id=req.id,
                 )
             )

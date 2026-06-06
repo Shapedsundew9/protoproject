@@ -41,6 +41,8 @@ Each element must have exactly these keys:
   "layer"        – one of: Product, Architecture, Design, Implementation
   "concern_value"– integer 1 (AI-autonomous) to 5 (requires human approval)
   "parent_text"  – exact text of the direct parent requirement, or null
+  "rationale"    – a concise explanation of *why* this requirement exists (the
+                   business or engineering reason); must not be empty
 
 Input text:
 """
@@ -51,6 +53,7 @@ def parse_requirement_text(
     copilot_client=None,
     *,
     fallback: bool = False,
+    default_rationale: str = "",
     progress: ProgressReporter | None = None,
     on_llm_usage: Callable[[LLMUsageSummary], None] | None = None,
     transcript: str | Path | None = None,
@@ -59,6 +62,8 @@ def parse_requirement_text(
 
     When *copilot_client* is ``None`` or *fallback* is ``True``, the
     deterministic mechanical parser is used instead of the LLM.
+    *default_rationale* is stamped on every draft produced by the mechanical
+    fallback (the LLM populates rationale itself from the prompt).
     """
     if fallback or copilot_client is None:
         message = (
@@ -79,7 +84,7 @@ def parse_requirement_text(
             status="fallback",
             message=message,
         )
-        return _mechanical_parse_fallback(raw_text)
+        return _mechanical_parse_fallback(raw_text, default_rationale=default_rationale)
 
     try:
         return asyncio.run(
@@ -112,7 +117,7 @@ def parse_requirement_text(
             status="fallback",
             message=f"LLM parse failed ({exc}); using mechanical fallback.",
         )
-        return _mechanical_parse_fallback(raw_text)
+        return _mechanical_parse_fallback(raw_text, default_rationale=default_rationale)
 
 
 
@@ -381,6 +386,7 @@ def _items_to_drafts(items: list[dict]) -> list[RequirementDraft]:
             parent_index=parent_index,
             layer=str(item.get("layer", "Product")),
             concern_value=int(item.get("concern_value", 3)),
+            rationale=str(item.get("rationale", "")).strip(),
         )
         drafts.append(draft)
         text_to_index[text] = len(drafts) - 1
@@ -393,11 +399,18 @@ def _items_to_drafts(items: list[dict]) -> list[RequirementDraft]:
 # ---------------------------------------------------------------------------
 
 
-def _mechanical_parse_fallback(raw_text: str) -> list[RequirementDraft]:
+def _mechanical_parse_fallback(
+    raw_text: str,
+    *,
+    default_rationale: str = "",
+) -> list[RequirementDraft]:
     """Convert a raw text document into flat requirement candidates.
 
     Treats headings and bullet-like lines as candidates; preserves parent
     index from indentation depth.
+    *default_rationale* is stamped on every produced draft; when the LLM
+    fallback is used, rationale will be empty (triggering a MISSING_RATIONALE
+    audit issue).
     """
     drafts: list[RequirementDraft] = []
     stack: list[tuple[int, int]] = []  # (indent_level, draft_index)
@@ -416,7 +429,11 @@ def _mechanical_parse_fallback(raw_text: str) -> list[RequirementDraft]:
             stack.pop()
         parent_index = stack[-1][1] if stack else None
 
-        draft = RequirementDraft(text=text, parent_index=parent_index)
+        draft = RequirementDraft(
+            text=text,
+            parent_index=parent_index,
+            rationale=default_rationale,
+        )
         drafts.append(draft)
         stack.append((indent, len(drafts) - 1))
 

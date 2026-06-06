@@ -23,11 +23,16 @@ def ingest_file(
     copilot_client=None,
     progress: ProgressReporter | None = None,
     transcript: str | Path | None = None,
+    project_id: str = "",
 ) -> IngestResult:
     """Run the Phase 1 pipeline for a single text file.
 
     *copilot_client* is the GitHub Copilot SDK client used for LLM-based
     parsing.  When ``None``, the mechanical fallback parser is used.
+    *project_id* links ingested requirements to a :class:`Project` node in
+    Neo4j.  When non-empty, the project node is created (idempotent) and
+    both the :class:`SourceRecord` and every :class:`RequirementRecord` are
+    linked to it via ``BELONGS_TO`` edges.
     """
     config = config or load_config()
     path = Path(path)
@@ -45,7 +50,7 @@ def ingest_file(
         message=f"Read source file {path} ({len(raw_text)} chars).",
     )
 
-    source = build_source_record(raw_text, path=str(path))
+    source = build_source_record(raw_text, path=str(path), project_id=project_id)
     emit_progress(
         progress,
         stage="build_source",
@@ -115,6 +120,8 @@ def ingest_file(
     )
     try:
         store.initialize_schema()
+        if project_id:
+            store.persist_project(project_id, name=project_id)
         store.persist_source(source)
         store.persist_requirements(requirements)
 

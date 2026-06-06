@@ -307,8 +307,108 @@ class ProtoProjectApp(App[HumanDecision | None]):
             pass
 
 
-# ---------------------------------------------------------------------------
-# Backward-compat alias
-# ---------------------------------------------------------------------------
 
 IngestReviewApp = ProtoProjectApp
+
+
+# ---------------------------------------------------------------------------
+# Project picker — shown when --project is not supplied at ingest time
+# ---------------------------------------------------------------------------
+
+class ProjectPickerApp(App[str | None]):
+    """TUI for selecting or creating a project before an ingest run.
+
+    Returns the chosen project ID string (or ``None`` if the user quits
+    without making a selection, in which case the caller falls back to the
+    plain-text prompt).
+    """
+
+    TITLE = "ProtoProject — Select Project"
+    CSS = """
+    Screen {
+        background: $surface;
+        align: center middle;
+    }
+    #picker_container {
+        width: 60;
+        height: auto;
+        border: solid $primary;
+        padding: 1 2;
+    }
+    Label.picker_title {
+        text-style: bold;
+        color: $text;
+        margin-bottom: 1;
+    }
+    DataTable#project_table {
+        height: 10;
+        margin-bottom: 1;
+    }
+    #new_project_input {
+        margin-top: 1;
+    }
+    Label.hint {
+        color: $text-muted;
+        margin-top: 1;
+    }
+    """
+
+    BINDINGS = [
+        Binding("enter", "confirm_selection", "Select", show=True),
+        Binding("n", "new_project", "New project", show=True),
+        Binding("q", "quit_app", "Cancel", show=True),
+    ]
+
+    def __init__(self, projects: list[dict]) -> None:
+        super().__init__()
+        self._projects = projects  # [{id, name}, ...]
+        self._new_mode = False
+
+    def compose(self) -> ComposeResult:
+        from textual.containers import Container  # noqa: PLC0415
+        from textual.widgets import Input  # noqa: PLC0415
+
+        yield Header()
+        with Container(id="picker_container"):
+            yield Label("Choose a project for this ingest run:", classes="picker_title")
+            table = DataTable(id="project_table")
+            table.add_columns("#", "Project ID")
+            for i, p in enumerate(self._projects, start=1):
+                table.add_row(str(i), p["id"])
+            yield table
+            yield Label(
+                "↑/↓ navigate  |  Enter select  |  n new project  |  q cancel",
+                classes="hint",
+            )
+            yield Input(placeholder="New project ID (press n first)", id="new_project_input")
+
+    def on_mount(self) -> None:
+        table = self.query_one("#project_table", DataTable)
+        if self._projects:
+            table.focus()
+        else:
+            self._new_mode = True
+            self.query_one("#new_project_input").focus()
+
+    def action_confirm_selection(self) -> None:
+        if self._new_mode:
+            from textual.widgets import Input  # noqa: PLC0415
+            new_id = self.query_one("#new_project_input", Input).value.strip()
+            if new_id:
+                self.exit(new_id)
+            return
+        try:
+            table = self.query_one("#project_table", DataTable)
+            row = table.cursor_row
+            if row is not None and 0 <= row < len(self._projects):
+                self.exit(self._projects[row]["id"])
+        except Exception:  # noqa: BLE001
+            pass
+
+    def action_new_project(self) -> None:
+        from textual.widgets import Input  # noqa: PLC0415
+        self._new_mode = True
+        self.query_one("#new_project_input", Input).focus()
+
+    def action_quit_app(self) -> None:
+        self.exit(None)
