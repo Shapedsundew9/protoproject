@@ -376,10 +376,46 @@
       "label": "GEMINI_API_KEY",
       "file_type": "code",
       "source_file": ".devcontainer/devcontainer.json",
-      "source_location": "L67",
+      "source_location": "L68",
       "id": "devcontainer_devcontainer_containerenv_gemini_api_key",
       "community": 8,
       "norm_label": "gemini_api_key"
+    },
+    {
+      "label": "test_env.py",
+      "file_type": "code",
+      "source_file": "src/test_env.py",
+      "source_location": "L1",
+      "id": "src_test_env",
+      "community": 10,
+      "norm_label": "test_env.py"
+    },
+    {
+      "label": "run_pipeline()",
+      "file_type": "code",
+      "source_file": "src/test_env.py",
+      "source_location": "L11",
+      "id": "src_test_env_run_pipeline",
+      "community": 10,
+      "norm_label": "run_pipeline()"
+    },
+    {
+      "label": "Test the dev environment is correctly set up by verifying connectivity to Neo4j",
+      "file_type": "rationale",
+      "source_file": "src/test_env.py",
+      "source_location": "L1",
+      "id": "src_test_env_rationale_1",
+      "community": 10,
+      "norm_label": "test the dev environment is correctly set up by verifying connectivity to neo4j"
+    },
+    {
+      "label": "Run the verification pipeline to test Neo4j connectivity and     GitHub Copilot",
+      "file_type": "rationale",
+      "source_file": "src/test_env.py",
+      "source_location": "L12",
+      "id": "src_test_env_rationale_12",
+      "community": 10,
+      "norm_label": "run the verification pipeline to test neo4j connectivity and     github copilot"
     },
     {
       "label": "cli.py",
@@ -2450,42 +2486,6 @@
       "id": "protoproject_validator_rationale_44"
     },
     {
-      "label": "test_env.py",
-      "file_type": "code",
-      "source_file": "src/test_env.py",
-      "source_location": "L1",
-      "community": 10,
-      "norm_label": "test_env.py",
-      "id": "src_test_env"
-    },
-    {
-      "label": "run_pipeline()",
-      "file_type": "code",
-      "source_file": "src/test_env.py",
-      "source_location": "L11",
-      "community": 10,
-      "norm_label": "run_pipeline()",
-      "id": "src_test_env_run_pipeline"
-    },
-    {
-      "label": "Test the dev environment is correctly set up by verifying connectivity to Neo4j",
-      "file_type": "rationale",
-      "source_file": "src/test_env.py",
-      "source_location": "L1",
-      "community": 10,
-      "norm_label": "test the dev environment is correctly set up by verifying connectivity to neo4j",
-      "id": "src_test_env_rationale_1"
-    },
-    {
-      "label": "Run the verification pipeline to test Neo4j connectivity and     GitHub Copilot",
-      "file_type": "rationale",
-      "source_file": "src/test_env.py",
-      "source_location": "L12",
-      "community": 10,
-      "norm_label": "run the verification pipeline to test neo4j connectivity and     github copilot",
-      "id": "src_test_env_rationale_12"
-    },
-    {
       "label": "test_session2.py",
       "file_type": "code",
       "source_file": "tests/test_session2.py",
@@ -2705,9 +2705,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_editor_codeactionsonsave",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_settings_editor_codeactionsonsave"
     },
     {
       "relation": "contains",
@@ -2715,9 +2715,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_editor_formatonsave",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_settings_editor_formatonsave"
     },
     {
       "relation": "contains",
@@ -2865,9 +2865,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_vscode_settings",
-      "target": "devcontainer_devcontainer_settings_python_testing_unittestenabled",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_settings_python_testing_unittestenabled"
     },
     {
       "relation": "contains",
@@ -2905,9 +2905,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_settings_python",
-      "target": "devcontainer_devcontainer_python_editor_defaultformatter",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_python_editor_defaultformatter"
     },
     {
       "relation": "contains",
@@ -2915,9 +2915,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_settings_python",
-      "target": "devcontainer_devcontainer_python_editor_formatonsave",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_python_editor_formatonsave"
     },
     {
       "relation": "contains",
@@ -2985,9 +2985,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_settings_jsonc",
-      "target": "devcontainer_devcontainer_jsonc_editor_defaultformatter",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_jsonc_editor_defaultformatter"
     },
     {
       "relation": "contains",
@@ -2995,9 +2995,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_settings_jsonc",
-      "target": "devcontainer_devcontainer_jsonc_editor_formatonsave",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_jsonc_editor_formatonsave"
     },
     {
       "relation": "contains",
@@ -3005,9 +3005,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_settings_editor_codeactionsonsave",
-      "target": "devcontainer_devcontainer_editor_codeactionsonsave_source_fixall_sortjson",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_editor_codeactionsonsave_source_fixall_sortjson"
     },
     {
       "relation": "contains",
@@ -3025,9 +3025,9 @@
       "source_file": ".devcontainer/devcontainer.json",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_containerenv",
-      "target": "devcontainer_devcontainer_containerenv_gemini_api_key",
-      "confidence_score": 1.0
+      "target": "devcontainer_devcontainer_containerenv_gemini_api_key"
     },
     {
       "relation": "contains",
@@ -3038,6 +3038,36 @@
       "confidence_score": 1.0,
       "source": "devcontainer_devcontainer_containerenv",
       "target": "devcontainer_devcontainer_containerenv_github_token"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/test_env.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_test_env",
+      "target": "src_test_env_run_pipeline"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/test_env.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_test_env_rationale_1",
+      "target": "src_test_env"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/test_env.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_test_env_rationale_12",
+      "target": "src_test_env_run_pipeline"
     },
     {
       "relation": "contains",
@@ -9718,36 +9748,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/test_env.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_test_env",
-      "target": "src_test_env_run_pipeline"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/test_env.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_test_env_rationale_1",
-      "target": "src_test_env"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/test_env.py",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_test_env_rationale_12",
-      "target": "src_test_env_run_pipeline"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "tests/test_session2.py",
       "source_location": "L13",
       "weight": 1.0,
@@ -9852,5 +9852,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8f875bb2b77ad070a355243e8eeb98d2586f5176"
+  "built_at_commit": "a8a5e2ba782153f224f2d1eff314874ce1f1bf0b"
 }
