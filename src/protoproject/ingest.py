@@ -17,7 +17,7 @@ _NEAR_DUPLICATE_THRESHOLD = 0.92
 _NEAR_DUPLICATE_LIMIT = 5
 
 
-async def ingest_file(
+def ingest_file(
     path: str | Path,
     config: AppConfig | None = None,
     copilot_client=None,
@@ -59,7 +59,7 @@ async def ingest_file(
         nonlocal llm_usage
         llm_usage = summary
 
-    drafts = await parse_requirement_text(
+    drafts = parse_requirement_text(
         raw_text,
         copilot_client,
         progress=progress,

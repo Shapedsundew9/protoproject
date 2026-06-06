@@ -71,7 +71,7 @@ class Phase1PipelineTests(unittest.TestCase):
     def test_async_parser_uses_fallback_without_client(self) -> None:
         """parse_requirement_text falls back to mechanical parse when no client."""
         raw_text = "- The system must work.\n- The system must scale.\n"
-        drafts = asyncio.run(parse_requirement_text(raw_text))
+        drafts = parse_requirement_text(raw_text)
         self.assertEqual(len(drafts), 2)
 
     def test_async_parser_emits_llm_usage_and_progress(self) -> None:
@@ -116,18 +116,18 @@ class Phase1PipelineTests(unittest.TestCase):
         progress_events = []
         usage_summaries: list[LLMUsageSummary] = []
 
-        drafts = asyncio.run(
-            parse_requirement_text(
-                raw_text,
-                client,
-                progress=progress_events.append,
-                on_llm_usage=usage_summaries.append,
-                transcript=None,
-            )
+        drafts = parse_requirement_text(
+            raw_text,
+            client,
+            progress=progress_events.append,
+            on_llm_usage=usage_summaries.append,
+            transcript=None,
         )
 
         self.assertEqual(len(drafts), 1)
         self.assertEqual(client.create_session_calls, 1)
+        self.assertEqual(client.start_calls, 1)
+        self.assertEqual(client.stop_calls, 1)
         self.assertGreaterEqual(len(progress_events), 2)
         self.assertEqual(progress_events[0].status, "started")
         self.assertEqual(progress_events[0].stage, "llm_parse")
@@ -151,13 +151,11 @@ class Phase1PipelineTests(unittest.TestCase):
         client = _FakeCopilotClient(_FakeCopilotSession(error=RuntimeError("boom")))
         progress_events = []
 
-        drafts = asyncio.run(
-            parse_requirement_text(
-                raw_text,
-                client,
-                progress=progress_events.append,
-                transcript=None,
-            )
+        drafts = parse_requirement_text(
+            raw_text,
+            client,
+            progress=progress_events.append,
+            transcript=None,
         )
 
         self.assertEqual(len(drafts), 1)
@@ -229,12 +227,10 @@ class Phase1PipelineTests(unittest.TestCase):
                 ),
                 patch("protoproject.ingest.Neo4jStore", _FakeNeo4jStore),
             ):
-                result = asyncio.run(
-                    ingest_file(
-                        path,
-                        config=AppConfig(),
-                        progress=progress_events.append,
-                    )
+                result = ingest_file(
+                    path,
+                    config=AppConfig(),
+                    progress=progress_events.append,
                 )
 
         self.assertEqual(len(result.requirements), 1)
@@ -293,7 +289,7 @@ class Phase1PipelineTests(unittest.TestCase):
             llm_usage=usage,
         )
 
-        async def fake_ingest_file(
+        def fake_ingest_file(
             path,
             copilot_client=None,
             progress=None,
@@ -318,11 +314,9 @@ class Phase1PipelineTests(unittest.TestCase):
 
         stdout = io.StringIO()
         stderr = io.StringIO()
-        real_asyncio_run = asyncio.run
         with (
             patch.dict("os.environ", {}, clear=True),
             patch.object(cli_module, "ingest_file", fake_ingest_file),
-            patch.object(cli_module.asyncio, "run", side_effect=real_asyncio_run),
             patch.object(sys, "stdout", stdout),
             patch.object(sys, "stderr", stderr),
         ):
@@ -335,7 +329,7 @@ class Phase1PipelineTests(unittest.TestCase):
         self.assertIn("LLM usage:", stdout.getvalue())
         self.assertIn("cost $0.0125", stdout.getvalue())
 
-    def test_run_ingest_uses_async_tui_runner_when_tty(self) -> None:
+    def test_run_ingest_uses_tui_runner_when_tty(self) -> None:
         from protoproject import cli as cli_module  # noqa: PLC0415
 
         source = build_source_record("- The system must work.\n", path="docs/vision.md")
@@ -357,7 +351,7 @@ class Phase1PipelineTests(unittest.TestCase):
             llm_usage=None,
         )
 
-        async def fake_ingest_file(
+        def fake_ingest_file(
             path,
             copilot_client=None,
             progress=None,
@@ -366,37 +360,35 @@ class Phase1PipelineTests(unittest.TestCase):
             _ = path, copilot_client, progress, transcript
             return result
 
-        app_called = {"run_async": 0}
+        app_called = {"run": 0}
 
         class _FakeApp:
             def __init__(self, ingest_result) -> None:
                 self.ingest_result = ingest_result
 
             def run(self) -> None:
-                raise AssertionError(
-                    "run() should not be called from async ingest path"
-                )
-
-            async def run_async(self) -> None:
                 if self.ingest_result != result:
                     raise AssertionError("unexpected ingest result passed to TUI")
-                app_called["run_async"] += 1
+                app_called["run"] += 1
+
+            async def run_async(self) -> None:
+                raise AssertionError(
+                    "run_async() should not be called from sync ingest path"
+                )
 
         stdout = _FakeTtyStream()
         stderr = io.StringIO()
-        real_asyncio_run = asyncio.run
         with (
             patch.dict("os.environ", {}, clear=True),
             patch.object(cli_module, "ingest_file", fake_ingest_file),
             patch.object(cli_module, "IngestReviewApp", _FakeApp),
-            patch.object(cli_module.asyncio, "run", side_effect=real_asyncio_run),
             patch.object(sys, "stdout", stdout),
             patch.object(sys, "stderr", stderr),
         ):
             exit_code = cli_module.main(["ingest", "docs/vision.md"])
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(app_called["run_async"], 1)
+        self.assertEqual(app_called["run"], 1)
         self.assertIn("No COPILOT_GITHUB_TOKEN", stderr.getvalue())
 
     def test_parser_writes_transcript_for_request_and_response(self) -> None:
@@ -419,12 +411,10 @@ class Phase1PipelineTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmpdir:
             transcript_path = Path(tmpdir) / "transcript.log"
-            drafts = asyncio.run(
-                parse_requirement_text(
-                    raw_text,
-                    client,
-                    transcript=transcript_path,
-                )
+            drafts = parse_requirement_text(
+                raw_text,
+                client,
+                transcript=transcript_path,
             )
 
             transcript = transcript_path.read_text(encoding="utf-8")
@@ -442,11 +432,9 @@ class Phase1PipelineTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmpdir:
             transcript_path = Path(tmpdir) / "transcript.log"
-            drafts = asyncio.run(
-                parse_requirement_text(
-                    raw_text,
-                    transcript=transcript_path,
-                )
+            drafts = parse_requirement_text(
+                raw_text,
+                transcript=transcript_path,
             )
             transcript = transcript_path.read_text(encoding="utf-8")
 
@@ -470,11 +458,10 @@ class Phase1PipelineTests(unittest.TestCase):
     def test_main_returns_130_on_keyboard_interrupt(self) -> None:
         from protoproject import cli as cli_module  # noqa: PLC0415
 
-        def raising_run(coro):
-            coro.close()
+        def raising_run(*args, **kwargs):
             raise KeyboardInterrupt
 
-        with patch.object(cli_module.asyncio, "run", side_effect=raising_run):
+        with patch.object(cli_module, "_run_ingest", side_effect=raising_run):
             exit_code = cli_module.main(["ingest", "docs/vision.md", "--no-tui"])
 
         self.assertEqual(exit_code, 130)
@@ -591,10 +578,19 @@ class _FakeCopilotClient:
     def __init__(self, session: "_FakeCopilotSession") -> None:
         self._session = session
         self.create_session_calls = 0
+        self.start_calls = 0
+        self.stop_calls = 0
+
+    async def start(self) -> None:
+        self.start_calls += 1
+
+    async def stop(self) -> None:
+        self.stop_calls += 1
 
     async def create_session(self, **_: object) -> "_FakeCopilotSession":
         self.create_session_calls += 1
         return self._session
+
 
 
 class _FakeCopilotSession:

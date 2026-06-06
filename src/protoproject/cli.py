@@ -181,7 +181,7 @@ def _build_arg_parser():
     return parser
 
 
-async def _run_ingest(
+def _run_ingest(
     path: Path,
     plain: bool,
     transcript: Path | None = None,
@@ -193,8 +193,7 @@ async def _run_ingest(
     if token:
         try:
             copilot_client = CopilotClient(github_token=token)
-            await copilot_client.start()
-        except (ImportError, OSError, RuntimeError, ValueError) as exc:
+        except (ImportError, ValueError) as exc:
             print(
                 f"[warn] Copilot client unavailable ({exc}); using mechanical parser.",
                 file=sys.stderr,
@@ -207,27 +206,21 @@ async def _run_ingest(
         )
 
     try:
-        result = await ingest_file(
+        result = ingest_file(
             path,
             copilot_client=copilot_client,
             progress=reporter,
             transcript=transcript,
         )
-    except asyncio.CancelledError:
+    except KeyboardInterrupt:
         reporter.close()
         print(f"[cancelled] {reporter.interruption_message()}", file=sys.stderr)
         raise
-    finally:
-        if copilot_client is not None:
-            try:
-                await copilot_client.stop()
-            except* StopError:
-                pass
     reporter.close()
 
     use_tui = not plain and sys.stdout.isatty()
     if use_tui:
-        await IngestReviewApp(result).run_async()
+        IngestReviewApp(result).run()
     else:
         print(f"Source:               {result.source.id}")
         print(f"Requirements created: {len(result.requirements)}")
@@ -245,12 +238,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "ingest":
         try:
-            return asyncio.run(
-                _run_ingest(
-                    args.path,
-                    plain=args.no_tui,
-                    transcript=args.transcript,
-                )
+            return _run_ingest(
+                args.path,
+                plain=args.no_tui,
+                transcript=args.transcript,
             )
         except KeyboardInterrupt:
             return 130

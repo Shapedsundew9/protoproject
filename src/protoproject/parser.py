@@ -46,7 +46,7 @@ Input text:
 """
 
 
-async def parse_requirement_text(
+def parse_requirement_text(
     raw_text: str,
     copilot_client=None,
     *,
@@ -82,12 +82,14 @@ async def parse_requirement_text(
         return _mechanical_parse_fallback(raw_text)
 
     try:
-        return await _llm_parse(
-            raw_text,
-            copilot_client,
-            progress=progress,
-            on_llm_usage=on_llm_usage,
-            transcript=transcript,
+        return asyncio.run(
+            _llm_parse(
+                raw_text,
+                copilot_client,
+                progress=progress,
+                on_llm_usage=on_llm_usage,
+                transcript=transcript,
+            )
         )
     except asyncio.CancelledError:
         emit_progress(
@@ -113,6 +115,7 @@ async def parse_requirement_text(
         return _mechanical_parse_fallback(raw_text)
 
 
+
 # ---------------------------------------------------------------------------
 # LLM path
 # ---------------------------------------------------------------------------
@@ -135,92 +138,102 @@ async def _llm_parse(
 
     prompt = _PARSE_PROMPT + raw_text
     _reset_transcript(transcript)
-    session = await copilot_client.create_session(
-        model="auto",
-        on_permission_request=PermissionHandler.approve_all,
-        streaming=False,
-    )
-    usage = LLMUsageSummary(input_chars=len(prompt))
-    started_at = time.perf_counter()
-
-    def handle_session_event(event) -> None:
-        match event.data:
-            case AssistantMessageData() as data:
-                if usage.model is None and data.model:
-                    usage.model = data.model
-            case AssistantUsageData() as data:
-                _merge_usage_summary(usage, data)
-            case SessionUsageInfoData() as data:
-                usage.context_tokens = data.current_tokens
-                usage.token_limit = data.token_limit
-
-    emit_progress(
-        progress,
-        stage=_LLM_PARSE_STAGE,
-        status="started",
-        message="Copilot parse request in progress.",
-    )
-    unsubscribe = session.on(handle_session_event)
-    heartbeat_task = asyncio.create_task(
-        _emit_llm_wait_heartbeats(progress, usage, started_at)
-    )
-
+    if hasattr(copilot_client, "start"):
+        await copilot_client.start()
     try:
+        session = await copilot_client.create_session(
+            model="auto",
+            on_permission_request=PermissionHandler.approve_all,
+            streaming=False,
+        )
+        usage = LLMUsageSummary(input_chars=len(prompt))
+        started_at = time.perf_counter()
+
+        def handle_session_event(event) -> None:
+            match event.data:
+                case AssistantMessageData() as data:
+                    if usage.model is None and data.model:
+                        usage.model = data.model
+                case AssistantUsageData() as data:
+                    _merge_usage_summary(usage, data)
+                case SessionUsageInfoData() as data:
+                    usage.context_tokens = data.current_tokens
+                    usage.token_limit = data.token_limit
+
+        emit_progress(
+            progress,
+            stage=_LLM_PARSE_STAGE,
+            status="started",
+            message="Copilot parse request in progress.",
+        )
+        unsubscribe = session.on(handle_session_event)
+        heartbeat_task = asyncio.create_task(
+            _emit_llm_wait_heartbeats(progress, usage, started_at)
+        )
+
+        try:
+            _append_transcript_block(
+                transcript,
+                "REQUEST",
+                (
+                    "stage=llm_parse\n"
+                    "session_model=auto\n"
+                    f"prompt_chars={len(prompt)}\n\n"
+                    "prompt:\n"
+                    f"{prompt}"
+                ),
+            )
+            response = await session.send_and_wait(
+                prompt=prompt,
+                timeout=_LLM_WAIT_TIMEOUT_SECONDS,
+            )
+        finally:
+            unsubscribe()
+            heartbeat_task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await heartbeat_task
+
+        response_text = _extract_text(response)
+        usage.output_chars = len(response_text)
         _append_transcript_block(
             transcript,
-            "REQUEST",
+            "RESPONSE",
             (
-                "stage=llm_parse\n"
-                "session_model=auto\n"
-                f"prompt_chars={len(prompt)}\n\n"
-                "prompt:\n"
-                f"{prompt}"
+                f"response_chars={len(response_text)}\n"
+                f"model={usage.model}\n"
+                f"cost_usd={usage.cost_usd}\n"
+                f"input_tokens={usage.input_tokens}\n"
+                f"output_tokens={usage.output_tokens}\n"
+                f"cache_read_tokens={usage.cache_read_tokens}\n"
+                f"cache_write_tokens={usage.cache_write_tokens}\n"
+                f"reasoning_tokens={usage.reasoning_tokens}\n"
+                f"duration_seconds={usage.duration_seconds}\n"
+                f"time_to_first_token_seconds={usage.time_to_first_token_seconds}\n"
+                f"context_tokens={usage.context_tokens}\n"
+                f"token_limit={usage.token_limit}\n\n"
+                "response:\n"
+                f"{response_text}"
             ),
         )
-        response = await session.send_and_wait(
-            prompt=prompt,
-            timeout=_LLM_WAIT_TIMEOUT_SECONDS,
+        if on_llm_usage is not None:
+            on_llm_usage(usage)
+        emit_progress(
+            progress,
+            stage=_LLM_PARSE_STAGE,
+            status="completed",
+            message="Copilot parse completed.",
+            elapsed_seconds=time.perf_counter() - started_at,
+            usage=usage,
         )
+        items = _parse_json_response(response_text)
+        return _items_to_drafts(items)
     finally:
-        unsubscribe()
-        heartbeat_task.cancel()
-        with contextlib.suppress(asyncio.CancelledError):
-            await heartbeat_task
-
-    response_text = _extract_text(response)
-    usage.output_chars = len(response_text)
-    _append_transcript_block(
-        transcript,
-        "RESPONSE",
-        (
-            f"response_chars={len(response_text)}\n"
-            f"model={usage.model}\n"
-            f"cost_usd={usage.cost_usd}\n"
-            f"input_tokens={usage.input_tokens}\n"
-            f"output_tokens={usage.output_tokens}\n"
-            f"cache_read_tokens={usage.cache_read_tokens}\n"
-            f"cache_write_tokens={usage.cache_write_tokens}\n"
-            f"reasoning_tokens={usage.reasoning_tokens}\n"
-            f"duration_seconds={usage.duration_seconds}\n"
-            f"time_to_first_token_seconds={usage.time_to_first_token_seconds}\n"
-            f"context_tokens={usage.context_tokens}\n"
-            f"token_limit={usage.token_limit}\n\n"
-            "response:\n"
-            f"{response_text}"
-        ),
-    )
-    if on_llm_usage is not None:
-        on_llm_usage(usage)
-    emit_progress(
-        progress,
-        stage=_LLM_PARSE_STAGE,
-        status="completed",
-        message="Copilot parse completed.",
-        elapsed_seconds=time.perf_counter() - started_at,
-        usage=usage,
-    )
-    items = _parse_json_response(response_text)
-    return _items_to_drafts(items)
+        if hasattr(copilot_client, "stop"):
+            from copilot.client import StopError  # noqa: PLC0415
+            try:
+                await copilot_client.stop()
+            except* StopError:
+                pass
 
 
 def _merge_usage_summary(usage: LLMUsageSummary, data: AssistantUsageData) -> None:
