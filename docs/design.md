@@ -66,16 +66,82 @@ Introduce LangGraph to orchestrate the refinement of Top-Level Product Requireme
 
 ### User Experience
 
-* **Interaction:** The system highlights a vague requirement (e.g., *"The system must be fast"*). It presents the specific NASA criteria violated (e.g., *Lack of Verifiability*).
-* **The "Concern Value" Toggle:** For each requirement, the user assigns a **Concern Value**. They flag critical paths (e.g., data privacy) as **High Concern** (demanding strict human sign-off) and infrastructure paths as **Low Concern** (granting AI autonomy).
+* **Input:** A raw, ingested `RequirementRecord` in the `Draft` state (e.g. from the parser in Phase 1).
+* **Interaction:** 
+  * The system highlights a vague requirement (e.g., *"The system must be fast"*). It presents the specific NASA criteria violated (e.g., *Lack of Verifiability*).
+  * **The "Concern Value" Toggle:** For each requirement, the user assigns a **Concern Value** (scale of 1-5). They flag critical paths (e.g., data privacy) as **High Concern** (demanding strict human sign-off) and infrastructure paths as **Low Concern** (granting AI autonomy).
+  * If a high-severity issue is found, the system auto-escalates the Concern Value (defaulting to 4 or higher) to mandate human sign-off.
 * **Output:** A stabilized, traceable Top-Level Product Requirements Graph.
 
 ### Data & Information Flow
 
-1. **Neo4j $\rightarrow$ LangGraph Orchestrator:** LangGraph pulls a requirement node and its immediate neighbors.
-2. **Orchestrator $\rightarrow$ NASA Evaluator (AI Agent):** A specialized agent evaluates the node text against NASA quality parameters.
-3. **Evaluator $\rightarrow$ User UI:** If a deficiency is found, LangGraph pauses the state machine and pushes a clarification prompt to the user.
-4. **User Response $\rightarrow$ Neo4j:** The user's input updates the node, creates a new version entry in the history chain, and changes the state to "Stabilized."
+1. **Neo4j $\rightarrow$ LangGraph Orchestrator:** LangGraph pulls a draft requirement node and its immediate neighbors (to evaluate context).
+2. **Orchestrator $\rightarrow$ NASA Evaluator (AI Agent):** A specialized agent evaluates the requirement text against NASA quality parameters.
+3. **NASA Evaluator $\rightarrow$ Refinement Suggester:** If issues are found, the evaluator generates a `RefinementProposal` containing the tightened text, adjusted concern values, and identified quality issues.
+4. **Refinement Suggester $\rightarrow$ User UI (TUI):** If the requirement is High Concern (or has high-severity issues), LangGraph pauses the state machine and pushes a clarification/approval prompt to the user.
+5. **User / AI Agent Decision $\rightarrow$ Neo4j:** The user's input or the AI's autonomous choice updates the requirement by creating a new version entry, setting the state (`Stabilized` or `Draft`), writing the `supersedes_id` link, and committing it to Neo4j.
+
+### Phase 2 Refinement & State Management
+
+The refinement engine operates as a state machine where requirements transition systematically based on quality validation and human supervision.
+
+* **LangGraph Orchestration State Machine:** The LangGraph workflow coordinates the sequence: loading drafts, performing rule-based evaluation, proposing changes, awaiting human interaction when needed, and committing new requirement versions.
+* **NASA Quality Check Rules:** The refinement engine runs deterministic checks defined in [quality.py](file:///workspaces/protoproject/src/protoproject/quality.py) to assess the following criteria:
+  * **Length Check (`TOO_SHORT`):** Requirements must be at least 12 characters long to ensure they convey substantive meaning.
+  * **Normative Modal Verbs (`NO_MODAL_VERB`):** Requirements must contain a modal verb (`must`, `shall`, `should`, or `will`) to signify a clear normative obligation.
+  * **Vague Language Check (`VAGUE_LANGUAGE`):** Requirements are scanned for ambiguous terms (`fast`, `quickly`, `user-friendly`, `easily`, `robust`, `scalable`, `flexible`, `intuitive`, `seamless`) that cannot be verified objectively.
+  * **Specificity Check (`LOW_SPECIFICITY`):** Requirements must have at least 4 words to ensure minimum detail.
+* **Concern Value Lifecycle & Escalation:**
+  * Concern values range from 1 to 5, serving as the threshold for human intervention.
+  * If a requirement triggers a high-severity quality issue (e.g., `TOO_SHORT` or `NO_MODAL_VERB`), the concern value is automatically escalated (set to 4 or higher) to flag the requirement for human review.
+  * **Low Concern (1-3):** Grants the AI system permission to resolve minor issues autonomously (e.g., minor wording corrections or template insertions) without pausing the loop.
+  * **High Concern (4-5):** Pauses the execution flow, requiring the user to explicitly choose a proposal, edit the text, or manually sign off on the override.
+* **Version Evolution & History Tracking:**
+  * Changes do not overwrite the existing nodes in place. Instead, they create a new `RequirementRecord` with an incremented `version` counter (e.g., version 2).
+  * A `supersedes_id` relationship (represented as a `[:SUPERSEDES]` relation in Neo4j) links the new requirement record to the old one.
+  * The state field tracks the requirement lifecycle:
+    * `Draft`: Initial ingested candidate.
+    * `Under_Review`: Active evaluation state.
+    * `Stabilized`: Passed all quality checks (or manually approved by the user).
+    * `Superseded`: Replaced by a newer version in the history chain.
+
+```mermaid
+flowchart TD
+%%{init: {"theme":"dark","themeVariables":{"lineColor":"#7c8a9f","edgeLabelBackground":"#0f172a","primaryColor":"#1f2937","secondaryColor":"#111827","tertiaryColor":"#1e293b","borderColor":"#475569","textColor":"#e2e8f0"}}%%
+    neo4j[("Neo4j Database")]
+    pull["Retrieve Draft Requirement"]
+    eval["NASA Quality Evaluator"]
+    decide{"Issues Detected?"}
+    auto["Generate Refinement Proposal"]
+    check_concern{"Concern & Severity Check"}
+    human["Human-in-the-Loop Pause\n(CLI / TUI Review)"]
+    apply["Apply Refinement\n(New Version & Link)"]
+    stabilized["Mark as Stabilized"]
+
+    neo4j --> pull
+    pull --> eval
+    eval --> decide
+    decide -->|Yes| auto
+    decide -->|No| stabilized
+    auto --> check_concern
+    check_concern -->|High Concern / Severity| human
+    check_concern -->|Low Concern & Severity| apply
+    human -->|User Approves / Modifies| apply
+    apply --> neo4j
+    stabilized --> neo4j
+
+    style neo4j fill:#111827,stroke:#475569,color:#e2e8f0
+    style pull fill:#111827,stroke:#475569,color:#e2e8f0
+    style eval fill:#111827,stroke:#475569,color:#e2e8f0
+    style decide fill:#111827,stroke:#475569,color:#e2e8f0
+    style auto fill:#111827,stroke:#475569,color:#e2e8f0
+    style check_concern fill:#111827,stroke:#475569,color:#e2e8f0
+    style human fill:#111827,stroke:#475569,color:#e2e8f0
+    style apply fill:#111827,stroke:#475569,color:#e2e8f0
+    style stabilized fill:#111827,stroke:#475569,color:#e2e8f0
+    linkStyle 8 stroke:#7c8a9f,stroke-dasharray: 4 4,opacity:0.8
+    linkStyle 9 stroke:#7c8a9f,stroke-dasharray: 4 4,opacity:0.8
+```
 
 ---
 
