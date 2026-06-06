@@ -15,6 +15,8 @@ dependencies = [
     "neo4j>=5.18.0",
     "github-copilot-sdk>=1.0.0",
     "langchain-openai>=0.1.0",
+    "sentence-transformers>=2.7",
+    "textual>=0.62.0",
 ]
 
 [project.optional-dependencies]

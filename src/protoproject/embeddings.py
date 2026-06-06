@@ -1,39 +1,32 @@
-"""Embedding helpers for Phase 1."""
+"""Embedding providers for Phase 1."""
 
 from __future__ import annotations
 
-import hashlib
+from typing import Protocol
 
 
-class HashEmbeddingProvider:
-    """Deterministic fallback embedding provider.
+class EmbeddingProvider(Protocol):
+    """Interface for text embedding backends."""
 
-    This keeps Phase 1 self-contained while the real embedding backend is
-    decided and wired in later.
+    def embed_text(self, text: str) -> list[float]: ...
+
+
+class SentenceTransformerProvider:
+    """Semantic embedding provider using a local sentence-transformers model.
+
+    The model is lazy-loaded on first use to avoid import-time cost.
+    Vectors are unit-normalised 384-dim floats (all-MiniLM-L6-v2).
     """
 
-    def __init__(self, dimension: int = 32) -> None:
-        if dimension <= 0:
-            raise ValueError("dimension must be positive")
-        self.dimension = dimension
+    MODEL_NAME = "all-MiniLM-L6-v2"
+
+    def __init__(self) -> None:
+        self._model = None
 
     def embed_text(self, text: str) -> list[float]:
-        vector = [0.0] * self.dimension
-        tokens = [token for token in _normalize(text).split() if token]
-        if not tokens:
-            return vector
+        if self._model is None:
+            from sentence_transformers import SentenceTransformer  # noqa: PLC0415
 
-        for token in tokens:
-            digest = hashlib.sha256(token.encode("utf-8")).digest()
-            bucket = digest[0] % self.dimension
-            weight = (digest[1] / 255.0) + 0.5
-            vector[bucket] += weight
-
-        magnitude = sum(value * value for value in vector) ** 0.5
-        if magnitude == 0:
-            return vector
-        return [round(value / magnitude, 6) for value in vector]
-
-
-def _normalize(text: str) -> str:
-    return " ".join(text.lower().strip().split())
+            self._model = SentenceTransformer(self.MODEL_NAME)
+        vector = self._model.encode(text, normalize_embeddings=True)
+        return vector.tolist()

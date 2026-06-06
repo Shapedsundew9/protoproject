@@ -13,7 +13,7 @@ class SourceRecord:
     id: str
     type: str
     hash: str
-    text: str
+    path: str
 
 
 @dataclass(slots=True)

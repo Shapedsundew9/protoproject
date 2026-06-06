@@ -6,7 +6,7 @@ import hashlib
 import time
 from dataclasses import dataclass
 
-from .embeddings import HashEmbeddingProvider
+from .embeddings import EmbeddingProvider
 from .models import RequirementDraft, RequirementRecord, SourceRecord
 
 
@@ -15,19 +15,23 @@ class ValidationContext:
     """Values used to normalize a single ingest run."""
 
     source: SourceRecord
-    embedding_provider: HashEmbeddingProvider
+    embedding_provider: EmbeddingProvider
     version: int = 1
     state: str = "Draft"
     layer: str = "Product"
     concern_value: int = 3
 
 
-def build_source_record(raw_text: str, source_type: str = "Markdown") -> SourceRecord:
+def build_source_record(
+    raw_text: str,
+    path: str = "",
+    source_type: str = "Markdown",
+) -> SourceRecord:
     """Create a stable source record for a raw document."""
 
     digest = hashlib.sha256(raw_text.encode("utf-8")).hexdigest()
     source_id = f"SRC-{digest[:8].upper()}"
-    return SourceRecord(id=source_id, type=source_type, hash=digest, text=raw_text)
+    return SourceRecord(id=source_id, type=source_type, hash=digest, path=path)
 
 
 def normalize_requirements(

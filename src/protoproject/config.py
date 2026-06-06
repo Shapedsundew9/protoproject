@@ -13,7 +13,7 @@ class AppConfig:
     neo4j_uri: str = "bolt://localhost:7687"
     neo4j_username: str = "neo4j"
     neo4j_password: str = "password"
-    embedding_dimension: int = 32
+    embedding_dimension: int = 384
 
 
 def load_config() -> AppConfig:
@@ -23,5 +23,5 @@ def load_config() -> AppConfig:
         neo4j_uri=os.getenv("NEO4J_URI", "bolt://localhost:7687"),
         neo4j_username=os.getenv("NEO4J_USERNAME", "neo4j"),
         neo4j_password=os.getenv("NEO4J_PASSWORD", "password"),
-        embedding_dimension=int(os.getenv("PROTOPROJECT_EMBEDDING_DIM", "32")),
+        embedding_dimension=int(os.getenv("PROTOPROJECT_EMBEDDING_DIM", "384")),
     )

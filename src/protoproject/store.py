@@ -49,12 +49,12 @@ class Neo4jStore:
                 MERGE (s:Source {id: $id})
                 SET s.type = $type,
                     s.hash = $hash,
-                    s.text = $text
+                    s.path = $path
                 """,
                 id=source.id,
                 type=source.type,
                 hash=source.hash,
-                text=source.text,
+                path=source.path,
             )
 
     def persist_requirements(self, requirements: list[RequirementRecord]) -> None:
@@ -173,3 +173,41 @@ class Neo4jStore:
                     child_id=revision.id,
                     dependency_id=dependency_id,
                 )
+
+    def find_similar(
+        self,
+        embedding: list[float],
+        threshold: float = 0.92,
+        limit: int = 10,
+        exclude_id: str | None = None,
+    ) -> list[dict]:
+        """Return existing requirements whose embeddings are above *threshold*
+        cosine similarity to *embedding*.
+
+        Returns an empty list if the vector index is unavailable.
+        """
+        try:
+            with self._driver.session() as session:
+                result = session.run(
+                    """
+                    CALL db.index.vector.queryNodes(
+                        'requirement_embedding_index', $limit, $embedding
+                    ) YIELD node, score
+                    WHERE score >= $threshold
+                      AND ($exclude_id IS NULL OR node.id <> $exclude_id)
+                    RETURN node.id AS id, node.text AS text, score
+                    ORDER BY score DESC
+                    """,
+                    limit=limit + (1 if exclude_id else 0),
+                    embedding=embedding,
+                    threshold=threshold,
+                    exclude_id=exclude_id,
+                )
+                return [
+                    {"id": row["id"], "text": row["text"], "score": row["score"]}
+                    for row in result
+                ]
+        except Exception:  # noqa: BLE001
+            # Vector index may not be available (e.g., Community edition without
+            # the vector plugin, or schema not yet initialised).
+            return []
