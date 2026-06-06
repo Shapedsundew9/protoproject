@@ -35,9 +35,9 @@
     "semantic_hash": "f9ab5051e69d6abf9a8cfd2b67a21410"
   },
   "src/protoproject/cli.py": {
-    "mtime": 1780742208.5289338,
-    "ast_hash": "14d48c770997c66cfbdd8d396c604d34",
-    "semantic_hash": "14d48c770997c66cfbdd8d396c604d34"
+    "mtime": 1780755413.8738644,
+    "ast_hash": "815c41d6f404fc17e55de5d59208e3a4",
+    "semantic_hash": ""
   },
   "src/protoproject/config.py": {
     "mtime": 1780737687.0396914,
@@ -45,9 +45,9 @@
     "semantic_hash": "714d2cc3f9bc991fdf01b0b178de9280"
   },
   "src/protoproject/embeddings.py": {
-    "mtime": 1780740166.7113714,
-    "ast_hash": "35c6dfc342d0c3c4912a2164fe7c4fbe",
-    "semantic_hash": "35c6dfc342d0c3c4912a2164fe7c4fbe"
+    "mtime": 1780755414.2564194,
+    "ast_hash": "a8874a6a8aaaf964894e7252568c8611",
+    "semantic_hash": ""
   },
   "src/protoproject/ingest.py": {
     "mtime": 1780742208.6093757,
@@ -60,9 +60,9 @@
     "semantic_hash": "b4883a97f21b8a78de30786b1e079a06"
   },
   "src/protoproject/parser.py": {
-    "mtime": 1780742208.8644092,
-    "ast_hash": "49fc9529a036fdf0131db78feec0a9d3",
-    "semantic_hash": "49fc9529a036fdf0131db78feec0a9d3"
+    "mtime": 1780755613.845985,
+    "ast_hash": "975d515c4674d96f3d021c72fe393c7c",
+    "semantic_hash": ""
   },
   "src/protoproject/progress.py": {
     "mtime": 1780740166.554065,
@@ -100,9 +100,9 @@
     "semantic_hash": "245d44488a1e950a8b1bdd8154ed4240"
   },
   "tests/test_phase1.py": {
-    "mtime": 1780742209.0418477,
-    "ast_hash": "6db588cbf4786029e0a64844b87064c4",
-    "semantic_hash": "6db588cbf4786029e0a64844b87064c4"
+    "mtime": 1780755614.005653,
+    "ast_hash": "28fd9dc4def47e0454085ac89548812e",
+    "semantic_hash": ""
   },
   "tests/test_session2.py": {
     "mtime": 1780737771.120584,
