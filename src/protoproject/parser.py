@@ -135,9 +135,6 @@ async def _llm_parse(
     prompt = _PARSE_PROMPT + raw_text
     _reset_transcript(transcript)
     session = await copilot_client.create_session(
-        tools=[],  # Strips out system/CLI tool injection schemas
-        skills=[],  # Strips out default behavioral patterns
-        custom_instructions="",  # Ensure no hidden repo-level markdown overrides are appended
         model="auto",
         on_permission_request=PermissionHandler.approve_all,
         streaming=False,

@@ -334,6 +334,70 @@ class Phase1PipelineTests(unittest.TestCase):
         self.assertIn("LLM usage:", stdout.getvalue())
         self.assertIn("cost $0.0125", stdout.getvalue())
 
+    def test_run_ingest_uses_async_tui_runner_when_tty(self) -> None:
+        from protoproject import cli as cli_module  # noqa: PLC0415
+
+        source = build_source_record("- The system must work.\n", path="docs/vision.md")
+        requirement = RequirementRecord(
+            id="REQ-1",
+            text="The system must work.",
+            embedding=_FAKE_EMBED,
+            layer="Product",
+            concern_value=3,
+            state="Draft",
+            version=1,
+            timestamp=1,
+            source_id=source.id,
+        )
+        result = IngestResult(
+            source=source,
+            requirements=[requirement],
+            issues=[],
+            llm_usage=None,
+        )
+
+        async def fake_ingest_file(
+            path,
+            copilot_client=None,
+            progress=None,
+            transcript=None,
+        ):
+            _ = path, copilot_client, progress, transcript
+            return result
+
+        app_called = {"run_async": 0}
+
+        class _FakeApp:
+            def __init__(self, ingest_result) -> None:
+                self.ingest_result = ingest_result
+
+            def run(self) -> None:
+                raise AssertionError(
+                    "run() should not be called from async ingest path"
+                )
+
+            async def run_async(self) -> None:
+                if self.ingest_result != result:
+                    raise AssertionError("unexpected ingest result passed to TUI")
+                app_called["run_async"] += 1
+
+        stdout = _FakeTtyStream()
+        stderr = io.StringIO()
+        real_asyncio_run = asyncio.run
+        with (
+            patch.dict("os.environ", {}, clear=True),
+            patch.object(cli_module, "ingest_file", fake_ingest_file),
+            patch.object(cli_module, "IngestReviewApp", _FakeApp),
+            patch.object(cli_module.asyncio, "run", side_effect=real_asyncio_run),
+            patch.object(sys, "stdout", stdout),
+            patch.object(sys, "stderr", stderr),
+        ):
+            exit_code = cli_module.main(["ingest", "docs/vision.md"])
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(app_called["run_async"], 1)
+        self.assertIn("No COPILOT_GITHUB_TOKEN", stderr.getvalue())
+
     def test_parser_writes_transcript_for_request_and_response(self) -> None:
         raw_text = "- The system must work.\n"
         response_text = (
